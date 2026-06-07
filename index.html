@@ -166,7 +166,6 @@ input,select{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:13px
       <div id="typeTabs" class="type-tabs">
         <button class="active" onclick="setStatsType('family')">집안일</button>
         <button onclick="setStatsType('personal')">자기계발</button>
-        <button onclick="setStatsType('gratitude')">감사</button>
         <button onclick="setStatsType('all')">전체</button>
       </div>
     </div>
@@ -189,16 +188,6 @@ input,select{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:13px
     <div class="section">
       <h2>각자 무슨일을 많이 했을까요?</h2>
       <div id="memberTopTasks">불러오는 중...</div>
-    </div>
-  </div>
-
-  <div id="gratitudeScreen" class="screen">
-    <div class="section">
-      <h2>감사</h2>
-      <div class="card">
-        <strong>준비 중이에요.</strong>
-        <p class="help">나중에는 “고마워” 메시지를 가족에게 보낼 수 있게 만들 예정이에요.</p>
-      </div>
     </div>
   </div>
 
@@ -287,7 +276,6 @@ input,select{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:13px
   <button id="recordTab" class="tab active" onclick="showScreen('record')">기록</button>
   <button id="walletTab" class="tab" onclick="showScreen('wallet')">지갑</button>
   <button id="statsTab" class="tab" onclick="showScreen('stats')">통계</button>
-  <button id="gratitudeTab" class="tab" onclick="showScreen('gratitude')">감사</button>
   <button id="adminTab" class="tab" onclick="showScreen('admin')">관리</button>
 </div>
 
@@ -345,7 +333,6 @@ function showScreen(name){
     record: "오늘 한 일을 기록해요",
     wallet: "받은 상금을 확인하고 사용해요",
     stats: "우리 가족의 변화를 살펴봐요",
-    gratitude: "고마운 마음을 나눠요",
     admin: "가족과 할 일을 관리해요"
   };
   document.getElementById("screenSub").textContent = subMap[name];
@@ -735,7 +722,7 @@ function renderCategoryStats(){
       <h3>${category.category_name}</h3>
       <div class="badge">많이 한 사람</div>
       <div class="rank-list">
-        ${renderRankRows(category.count_ranking, "count", "회")}
+        ${renderRankRows(category.count_ranking, "count", "번")}
       </div>
       <div class="badge">어려운 일을 많이 한 사람</div>
       <div class="rank-list">
@@ -816,7 +803,7 @@ function renderMemberTopTasks(){
       ${filteredCategories.map(category=>`
         <div>
           <strong>${category.category_name}</strong>:
-          ${category.top_tasks.map(t=>`${t.task_name} ${t.count}회`).join(", ")}
+          ${category.top_tasks.map(t=>`${t.task_name} ${t.count}번`).join(", ")}
         </div>
       `).join("")}
     `;
