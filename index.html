@@ -26,15 +26,15 @@ button.active{background:#111827;color:#fff}
 .toast{position:fixed;left:50%;bottom:76px;transform:translateX(-50%);background:#111827;color:#fff;padding:12px 18px;border-radius:999px;display:none;z-index:10}
 .screen{display:none}
 .screen.active{display:block}
-.tabs{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:430px;display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-top:1px solid #e5e7eb;z-index:9}
-.tab{border-radius:0;background:#fff;color:#6b7280;padding:12px 4px;font-size:13px}
+.tabs{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:430px;display:grid;grid-template-columns:repeat(5,1fr);background:#fff;border-top:1px solid #e5e7eb;z-index:9}
+.tab{border-radius:0;background:#fff;color:#6b7280;padding:12px 2px;font-size:12px}
 .tab.active{background:#eff6ff;color:#2563eb}
-.filter-tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:10px}
-.filter-tabs button{font-size:12px;padding:9px 4px;border-radius:999px;background:#f3f4f6;color:#4b5563}
-.filter-tabs button.active{background:#111827;color:#fff}
-.period-tabs,.type-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
-.period-tabs button,.type-tabs button{font-size:12px;padding:9px 4px;border-radius:999px;background:#f3f4f6;color:#4b5563}
-.period-tabs button.active,.type-tabs button.active{background:#111827;color:#fff}
+.filter-tabs,.period-tabs,.type-tabs,.admin-tabs{display:grid;gap:6px;margin-bottom:10px}
+.filter-tabs{grid-template-columns:repeat(5,1fr)}
+.period-tabs,.type-tabs{grid-template-columns:repeat(4,1fr)}
+.admin-tabs{grid-template-columns:repeat(2,1fr)}
+.filter-tabs button,.period-tabs button,.type-tabs button,.admin-tabs button{font-size:12px;padding:9px 4px;border-radius:999px;background:#f3f4f6;color:#4b5563}
+.filter-tabs button.active,.period-tabs button.active,.type-tabs button.active,.admin-tabs button.active{background:#111827;color:#fff}
 input,select{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:13px;font-size:15px;background:#fff}
 .form{display:grid;gap:10px}
 .form-row{display:grid;grid-template-columns:72px 1fr;align-items:center;gap:10px}
@@ -56,8 +56,8 @@ input,select{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:13px
 .summary-box .label{font-size:12px;color:#6b7280;margin-bottom:4px}
 .summary-box .value{font-size:22px;font-weight:900}
 .change{font-size:13px;margin-top:8px;color:#6b7280}
-.category-card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:14px;margin-bottom:12px}
-.category-card h3{font-size:16px;margin:0 0 10px}
+.category-card,.member-card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:14px;margin-bottom:12px}
+.category-card h3,.member-card h3{font-size:16px;margin:0 0 10px}
 .rank-list{display:grid;gap:6px;margin-bottom:12px}
 .rank-row{display:grid;grid-template-columns:28px 1fr auto;gap:8px;font-size:14px}
 .share-row{margin-bottom:12px}
@@ -69,10 +69,15 @@ input,select{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:13px
 .seg:nth-child(3){background:#f59e0b}
 .seg:nth-child(4){background:#dc2626}
 .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;font-size:12px;color:#6b7280}
-.member-card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:12px;margin-bottom:10px}
-.member-card h3{font-size:15px;margin:0 0 8px}
-.member-card div{font-size:13px;color:#374151;margin:4px 0}
 .empty{color:#6b7280;font-size:14px}
+.admin-card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:14px;margin-bottom:12px}
+.admin-title{font-size:16px;font-weight:900;margin-bottom:4px}
+.admin-meta{font-size:13px;color:#6b7280;margin-bottom:10px}
+.admin-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn-small{padding:10px 8px;font-size:13px}
+.btn-danger{background:#fee2e2;color:#991b1b}
+.btn-gray{background:#f3f4f6;color:#374151}
+.help{font-size:13px;color:#6b7280;line-height:1.5}
 </style>
 </head>
 
@@ -187,10 +192,93 @@ input,select{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:13px
     </div>
   </div>
 
+  <div id="gratitudeScreen" class="screen">
+    <div class="section">
+      <h2>감사</h2>
+      <div class="card">
+        <strong>준비 중이에요.</strong>
+        <p class="help">나중에는 “고마워” 메시지를 가족에게 보낼 수 있게 만들 예정이에요.</p>
+      </div>
+    </div>
+  </div>
+
   <div id="adminScreen" class="screen">
     <div class="section">
       <h2>관리</h2>
-      <div class="card">집안일 추가/수정/삭제는 다음 단계에서 연결할 예정이에요.</div>
+      <div id="adminTabs" class="admin-tabs">
+        <button class="active" onclick="setAdminMode('member')">가족 관리</button>
+        <button onclick="setAdminMode('task')">할 일 관리</button>
+      </div>
+    </div>
+
+    <div id="memberAdmin">
+      <div class="section">
+        <h2>가족 추가/수정</h2>
+        <div class="card form">
+          <input type="hidden" id="memberIdInput" />
+          <div class="form-row">
+            <label>이름</label>
+            <input id="memberNameInput" type="text" placeholder="예: 엄마" />
+          </div>
+          <div class="form-row">
+            <label>구분</label>
+            <select id="memberRoleInput">
+              <option value="parent">어른</option>
+              <option value="child">아이</option>
+            </select>
+          </div>
+          <button class="save" onclick="saveMemberFromAdmin()">저장하기</button>
+          <button class="btn-gray" onclick="resetMemberForm()">새로 입력하기</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>가족 목록</h2>
+        <div id="adminMemberList">불러오는 중...</div>
+      </div>
+    </div>
+
+    <div id="taskAdmin" style="display:none">
+      <div class="section">
+        <h2>할 일 추가/수정</h2>
+        <div class="card form">
+          <input type="hidden" id="taskIdInput" />
+          <div class="form-row">
+            <label>할 일</label>
+            <input id="taskNameInput" type="text" placeholder="예: 설거지" />
+          </div>
+          <div class="form-row">
+            <label>카테고리</label>
+            <select id="taskCategoryInput"></select>
+          </div>
+          <div class="form-row">
+            <label>누가 하나요</label>
+            <select id="taskScopeInput">
+              <option value="all">모두</option>
+              <option value="adult">어른만</option>
+              <option value="child">아이만</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label>점수</label>
+            <input id="taskScoreInput" type="number" value="1" />
+          </div>
+          <div class="form-row">
+            <label>리워드</label>
+            <select id="taskRewardInput">
+              <option value="TRUE">쌓아요</option>
+              <option value="FALSE">안 쌓아요</option>
+            </select>
+          </div>
+          <button class="save" onclick="saveTaskFromAdmin()">저장하기</button>
+          <button class="btn-gray" onclick="resetTaskForm()">새로 입력하기</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>할 일 목록</h2>
+        <div id="adminTaskList">불러오는 중...</div>
+      </div>
     </div>
   </div>
 </div>
@@ -199,6 +287,7 @@ input,select{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:13px
   <button id="recordTab" class="tab active" onclick="showScreen('record')">기록</button>
   <button id="walletTab" class="tab" onclick="showScreen('wallet')">월렛</button>
   <button id="statsTab" class="tab" onclick="showScreen('stats')">통계</button>
+  <button id="gratitudeTab" class="tab" onclick="showScreen('gratitude')">감사</button>
   <button id="adminTab" class="tab" onclick="showScreen('admin')">관리</button>
 </div>
 
@@ -210,6 +299,7 @@ const API_URL =
 
 let members = [];
 let tasks = [];
+let categories = [];
 let todayLogs = [];
 let walletSummary = [];
 let walletHistory = [];
@@ -222,17 +312,26 @@ let todayLogFilter = "ALL";
 let walletHistoryFilter = "ALL";
 let statsPeriod = "month";
 let statsType = "family";
+let adminMode = "member";
 
 async function init(){
-  members = await fetch(API_URL + "?action=getMembers").then(r=>r.json());
-  tasks = await fetch(API_URL + "?action=getTasks").then(r=>r.json());
+  await loadBaseData();
 
   renderMembers();
   renderSpendMembers();
   renderMemberFilters("todayLogFilters", setTodayLogFilter);
   renderMemberFilters("walletHistoryFilters", setWalletHistoryFilter);
   renderTasks();
+  renderTaskCategorySelect();
+  renderAdminLists();
+
   await loadTodayLogs();
+}
+
+async function loadBaseData(){
+  members = await fetch(API_URL + "?action=getMembers").then(r=>r.json());
+  tasks = await fetch(API_URL + "?action=getTasks").then(r=>r.json());
+  categories = await fetch(API_URL + "?action=getCategories").then(r=>r.json());
 }
 
 function showScreen(name){
@@ -246,7 +345,8 @@ function showScreen(name){
     record: "오늘 한 일을 기록해요",
     wallet: "쌓은 리워드를 확인하고 사용해요",
     stats: "우리 가족의 변화를 살펴봐요",
-    admin: "집안일 항목을 관리해요"
+    gratitude: "고마운 마음을 나눠요",
+    admin: "가족과 할 일을 관리해요"
   };
   document.getElementById("screenSub").textContent = subMap[name];
 
@@ -257,6 +357,10 @@ function showScreen(name){
 
   if(name === "stats"){
     loadInsightStats();
+  }
+
+  if(name === "admin"){
+    renderAdminLists();
   }
 }
 
@@ -723,6 +827,232 @@ function renderMemberTopTasks(){
   if(!box.innerHTML){
     box.innerHTML = `<div class="card empty">아직 구성원별 기록이 없어요.</div>`;
   }
+}
+
+function setAdminMode(mode){
+  adminMode = mode;
+
+  document.querySelectorAll("#adminTabs button").forEach(btn=>btn.classList.remove("active"));
+  event.target.classList.add("active");
+
+  document.getElementById("memberAdmin").style.display = mode === "member" ? "block" : "none";
+  document.getElementById("taskAdmin").style.display = mode === "task" ? "block" : "none";
+}
+
+function renderTaskCategorySelect(){
+  const select = document.getElementById("taskCategoryInput");
+  select.innerHTML = "";
+
+  categories.forEach(c=>{
+    const option = document.createElement("option");
+    option.value = c.category_id;
+    option.textContent = c.category_name;
+    select.appendChild(option);
+  });
+}
+
+function renderAdminLists(){
+  renderAdminMemberList();
+  renderAdminTaskList();
+}
+
+function renderAdminMemberList(){
+  const box = document.getElementById("adminMemberList");
+  box.innerHTML = "";
+
+  members.forEach(m=>{
+    const roleLabel = m.role === "parent" ? "어른" : "아이";
+
+    const card = document.createElement("div");
+    card.className = "admin-card";
+    card.innerHTML = `
+      <div class="admin-title">${m.name}</div>
+      <div class="admin-meta">${roleLabel}</div>
+      <div class="admin-actions">
+        <button class="btn-small btn-gray" onclick="editMember('${m.member_id}')">수정</button>
+        <button class="btn-small btn-danger" onclick="deleteMemberFromAdmin('${m.member_id}')">삭제</button>
+      </div>
+    `;
+    box.appendChild(card);
+  });
+}
+
+function renderAdminTaskList(){
+  const box = document.getElementById("adminTaskList");
+  box.innerHTML = "";
+
+  tasks.forEach(t=>{
+    const scopeLabel = t.target_scope === "adult" ? "어른만" : t.target_scope === "child" ? "아이만" : "모두";
+    const rewardLabel = String(t.reward_eligible).toUpperCase() === "TRUE" ? "리워드 쌓음" : "리워드 없음";
+
+    const card = document.createElement("div");
+    card.className = "admin-card";
+    card.innerHTML = `
+      <div class="admin-title">${t.task_name}</div>
+      <div class="admin-meta">${t.category_name || "기타"} · ${scopeLabel} · ${t.base_score}점 · ${rewardLabel}</div>
+      <div class="admin-actions">
+        <button class="btn-small btn-gray" onclick="editTask('${t.task_id}')">수정</button>
+        <button class="btn-small btn-danger" onclick="deleteTaskFromAdmin('${t.task_id}')">삭제</button>
+      </div>
+    `;
+    box.appendChild(card);
+  });
+}
+
+function editMember(memberId){
+  const m = members.find(item => item.member_id === memberId);
+  if(!m) return;
+
+  document.getElementById("memberIdInput").value = m.member_id;
+  document.getElementById("memberNameInput").value = m.name;
+  document.getElementById("memberRoleInput").value = m.role;
+  showToast("가족 정보를 수정해 보세요");
+}
+
+function resetMemberForm(){
+  document.getElementById("memberIdInput").value = "";
+  document.getElementById("memberNameInput").value = "";
+  document.getElementById("memberRoleInput").value = "parent";
+}
+
+async function saveMemberFromAdmin(){
+  const memberId = document.getElementById("memberIdInput").value;
+  const name = document.getElementById("memberNameInput").value.trim();
+  const role = document.getElementById("memberRoleInput").value;
+
+  if(!name){
+    showToast("이름을 입력해 주세요");
+    return;
+  }
+
+  const action = memberId ? "updateMember" : "addMember";
+
+  const res = await fetch(API_URL, {
+    method:"POST",
+    body: JSON.stringify({
+      action,
+      member_id: memberId,
+      name,
+      role,
+      is_active: true
+    })
+  }).then(r=>r.json());
+
+  if(res.ok){
+    showToast("저장했어요");
+    resetMemberForm();
+    await reloadAfterAdminChange();
+  }else{
+    showToast("저장 실패");
+  }
+}
+
+async function deleteMemberFromAdmin(memberId){
+  if(!confirm("이 가족을 목록에서 숨길까요?")) return;
+
+  const res = await fetch(API_URL, {
+    method:"POST",
+    body: JSON.stringify({
+      action:"deleteMember",
+      member_id:memberId
+    })
+  }).then(r=>r.json());
+
+  if(res.ok){
+    showToast("삭제했어요");
+    await reloadAfterAdminChange();
+  }else{
+    showToast("삭제 실패");
+  }
+}
+
+function editTask(taskId){
+  const t = tasks.find(item => item.task_id === taskId);
+  if(!t) return;
+
+  document.getElementById("taskIdInput").value = t.task_id;
+  document.getElementById("taskNameInput").value = t.task_name;
+  document.getElementById("taskCategoryInput").value = t.category_id;
+  document.getElementById("taskScopeInput").value = t.target_scope || "all";
+  document.getElementById("taskScoreInput").value = t.base_score || 1;
+  document.getElementById("taskRewardInput").value =
+    String(t.reward_eligible).toUpperCase() === "TRUE" ? "TRUE" : "FALSE";
+
+  showToast("할 일을 수정해 보세요");
+}
+
+function resetTaskForm(){
+  document.getElementById("taskIdInput").value = "";
+  document.getElementById("taskNameInput").value = "";
+  document.getElementById("taskCategoryInput").selectedIndex = 0;
+  document.getElementById("taskScopeInput").value = "all";
+  document.getElementById("taskScoreInput").value = 1;
+  document.getElementById("taskRewardInput").value = "TRUE";
+}
+
+async function saveTaskFromAdmin(){
+  const taskId = document.getElementById("taskIdInput").value;
+  const taskName = document.getElementById("taskNameInput").value.trim();
+
+  if(!taskName){
+    showToast("할 일 이름을 입력해 주세요");
+    return;
+  }
+
+  const action = taskId ? "updateTask" : "addTask";
+
+  const res = await fetch(API_URL, {
+    method:"POST",
+    body: JSON.stringify({
+      action,
+      task_id: taskId,
+      task_name: taskName,
+      category_id: document.getElementById("taskCategoryInput").value,
+      target_scope: document.getElementById("taskScopeInput").value,
+      base_score: Number(document.getElementById("taskScoreInput").value || 1),
+      reward_eligible: document.getElementById("taskRewardInput").value,
+      is_active: true
+    })
+  }).then(r=>r.json());
+
+  if(res.ok){
+    showToast("저장했어요");
+    resetTaskForm();
+    await reloadAfterAdminChange();
+  }else{
+    showToast("저장 실패");
+  }
+}
+
+async function deleteTaskFromAdmin(taskId){
+  if(!confirm("이 할 일을 목록에서 숨길까요?")) return;
+
+  const res = await fetch(API_URL, {
+    method:"POST",
+    body: JSON.stringify({
+      action:"deleteTask",
+      task_id:taskId
+    })
+  }).then(r=>r.json());
+
+  if(res.ok){
+    showToast("삭제했어요");
+    await reloadAfterAdminChange();
+  }else{
+    showToast("삭제 실패");
+  }
+}
+
+async function reloadAfterAdminChange(){
+  await loadBaseData();
+
+  renderMembers();
+  renderSpendMembers();
+  renderMemberFilters("todayLogFilters", setTodayLogFilter);
+  renderMemberFilters("walletHistoryFilters", setWalletHistoryFilter);
+  renderTasks();
+  renderTaskCategorySelect();
+  renderAdminLists();
 }
 
 function showToast(msg){
