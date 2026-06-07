@@ -3,157 +3,47 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Family OS</title>
+<title>집안일 함께하기</title>
 <style>
 *{box-sizing:border-box}
-body{
-  margin:0;
-  background:#f4f6f8;
-  font-family:Arial,"Noto Sans KR",sans-serif;
-  color:#111827;
-}
-.app{
-  max-width:430px;
-  min-height:100vh;
-  margin:0 auto;
-  background:#fff;
-  padding:22px 18px 92px;
-}
+body{margin:0;background:#f4f6f8;font-family:Arial,"Noto Sans KR",sans-serif;color:#111827}
+.app{max-width:430px;min-height:100vh;margin:0 auto;background:#fff;padding:22px 18px 92px}
 h1{font-size:26px;margin:0 0 4px}
 .sub{color:#6b7280;margin-bottom:22px}
 .section{margin:24px 0}
 .section h2{font-size:17px;margin-bottom:12px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-button{
-  border:0;
-  border-radius:14px;
-  padding:14px 10px;
-  background:#eef2ff;
-  font-size:15px;
-  font-weight:700;
-}
-button.active{
-  background:#111827;
-  color:#fff;
-}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+button{border:0;border-radius:14px;padding:13px 8px;background:#eef2ff;font-size:14px;font-weight:700}
+button.active{background:#111827;color:#fff}
 .task-group{margin-bottom:18px}
-.task-group-title{
-  font-size:14px;
-  color:#6b7280;
-  margin:0 0 8px;
-}
-.tasks{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-}
-.save{
-  width:100%;
-  background:#2563eb;
-  color:#fff;
-  font-size:17px;
-  padding:16px;
-  margin-top:10px;
-}
-.danger{
-  background:#fee2e2;
-  color:#991b1b;
-}
-.secondary{
-  background:#f3f4f6;
-  color:#374151;
-}
-.card{
-  background:#f9fafb;
-  border:1px solid #e5e7eb;
-  border-radius:18px;
-  padding:16px;
-  margin-bottom:12px;
-}
-.stat-row{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  padding:10px 0;
-  border-bottom:1px solid #e5e7eb;
-}
+.task-group-title{font-size:14px;color:#6b7280;margin:0 0 8px}
+.tasks{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.save{width:100%;background:#2563eb;color:#fff;font-size:17px;padding:16px;margin-top:10px}
+.card{background:#f9fafb;border:1px solid #e5e7eb;border-radius:18px;padding:16px;margin-bottom:12px}
+.stat-row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #e5e7eb}
 .stat-row:last-child{border-bottom:0}
-.stat-row small{
-  color:#6b7280;
-  font-weight:400;
-}
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:76px;
-  transform:translateX(-50%);
-  background:#111827;
-  color:#fff;
-  padding:12px 18px;
-  border-radius:999px;
-  display:none;
-  z-index:10;
-}
+.stat-row small{color:#6b7280;font-weight:400}
+.toast{position:fixed;left:50%;bottom:76px;transform:translateX(-50%);background:#111827;color:#fff;padding:12px 18px;border-radius:999px;display:none;z-index:10}
 .screen{display:none}
 .screen.active{display:block}
-.tabs{
-  position:fixed;
-  left:50%;
-  bottom:0;
-  transform:translateX(-50%);
-  width:100%;
-  max-width:430px;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  background:#fff;
-  border-top:1px solid #e5e7eb;
-  z-index:9;
-}
-.tab{
-  border-radius:0;
-  background:#fff;
-  color:#6b7280;
-  padding:12px 4px;
-  font-size:13px;
-}
-.tab.active{
-  background:#eff6ff;
-  color:#2563eb;
-}
-input, select{
-  width:100%;
-  border:1px solid #e5e7eb;
-  border-radius:12px;
-  padding:13px;
-  font-size:15px;
-  background:#fff;
-}
-.form{
-  display:grid;
-  gap:10px;
-}
-.badge{
-  display:inline-block;
-  padding:4px 8px;
-  border-radius:999px;
-  background:#eef2ff;
-  color:#3730a3;
-  font-size:12px;
-  font-weight:700;
-}
-.empty{
-  color:#6b7280;
-  font-size:14px;
-}
+.tabs{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:430px;display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-top:1px solid #e5e7eb;z-index:9}
+.tab{border-radius:0;background:#fff;color:#6b7280;padding:12px 4px;font-size:13px}
+.tab.active{background:#eff6ff;color:#2563eb}
+.filter-tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:10px}
+.filter-tabs button{font-size:12px;padding:9px 4px;border-radius:999px;background:#f3f4f6;color:#4b5563}
+.filter-tabs button.active{background:#111827;color:#fff}
+input,select{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:13px;font-size:15px;background:#fff}
+.form{display:grid;gap:10px}
+.total-reward{font-size:30px;font-weight:900;color:#2563eb}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:12px;font-weight:700}
 </style>
 </head>
+
 <body>
-
 <div class="app">
-  <h1>Family OS</h1>
-  <div id="screenSub" class="sub">오늘의 기여를 기록해요</div>
+  <h1>집안일 함께하기</h1>
+  <div id="screenSub" class="sub">오늘 한 일을 기록해요</div>
 
-  <!-- 기록 탭 -->
   <div id="recordScreen" class="screen active">
     <div class="section">
       <h2>누가 했나요?</h2>
@@ -169,14 +59,21 @@ input, select{
 
     <div class="section">
       <h2>오늘 기록</h2>
+      <div id="todayLogFilters" class="filter-tabs"></div>
       <div id="todayLogs" class="card">불러오는 중...</div>
     </div>
   </div>
 
-  <!-- 월렛 탭 -->
   <div id="walletScreen" class="screen">
     <div class="section">
-      <h2>리워드 잔액</h2>
+      <h2>가족 전체 리워드</h2>
+      <div class="card">
+        <div class="total-reward" id="familyRewardTotal">0원</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>구성원별 리워드</h2>
       <div id="walletSummary" class="card">불러오는 중...</div>
     </div>
 
@@ -192,47 +89,22 @@ input, select{
 
     <div class="section">
       <h2>월렛 기록</h2>
+      <div id="walletHistoryFilters" class="filter-tabs"></div>
       <div id="walletHistory" class="card">불러오는 중...</div>
     </div>
   </div>
 
-  <!-- 통계 탭 -->
   <div id="statsScreen" class="screen">
     <div class="section">
-      <h2>오늘의 기여도</h2>
-      <div id="todayStats" class="card">불러오는 중...</div>
-    </div>
-
-    <div class="section">
-      <h2>누적 기여도</h2>
-      <div id="totalStats" class="card">불러오는 중...</div>
-    </div>
-
-    <div class="section">
-      <h2>활동별 기여</h2>
-      <div id="taskStats" class="card">불러오는 중...</div>
+      <h2>통계</h2>
+      <div class="card">통계 기능은 다음 단계에서 연결할 예정이에요.</div>
     </div>
   </div>
 
-  <!-- 관리 탭 -->
   <div id="adminScreen" class="screen">
     <div class="section">
-      <h2>집안일 추가</h2>
-      <div class="card form">
-        <input id="adminTaskName" type="text" placeholder="집안일 이름 예: 설거지" />
-        <select id="adminCategory"></select>
-        <input id="adminScore" type="number" placeholder="기본 점수 예: 1" value="1" />
-        <select id="adminRewardEligible">
-          <option value="TRUE">리워드 적립함</option>
-          <option value="FALSE">리워드 적립 안 함</option>
-        </select>
-        <button class="save" onclick="addTaskFromAdmin()">집안일 추가하기</button>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>집안일 목록</h2>
-      <div id="adminTaskList" class="card">불러오는 중...</div>
+      <h2>관리</h2>
+      <div class="card">집안일 추가/수정/삭제는 다음 단계에서 연결할 예정이에요.</div>
     </div>
   </div>
 </div>
@@ -252,20 +124,23 @@ const API_URL =
 
 let members = [];
 let tasks = [];
+let todayLogs = [];
+let walletHistory = [];
 let selectedMember = null;
+let selectedMemberRole = null;
 let selectedTask = null;
+let todayLogFilter = "ALL";
+let walletHistoryFilter = "ALL";
 
 async function init(){
   members = await fetch(API_URL + "?action=getMembers").then(r=>r.json());
   tasks = await fetch(API_URL + "?action=getTasks").then(r=>r.json());
 
   renderMembers();
-  renderTasks();
   renderSpendMembers();
-  renderAdminCategories();
-  renderAdminTaskList();
-
-  loadTodayLogs();
+  renderMemberFilters("todayLogFilters", setTodayLogFilter);
+  renderMemberFilters("walletHistoryFilters", setWalletHistoryFilter);
+  await loadTodayLogs();
 }
 
 function showScreen(name){
@@ -276,7 +151,7 @@ function showScreen(name){
   document.getElementById(name + "Tab").classList.add("active");
 
   const subMap = {
-    record: "오늘의 기여를 기록해요",
+    record: "오늘 한 일을 기록해요",
     wallet: "쌓은 리워드를 확인하고 사용해요",
     stats: "우리 가족의 기여도를 살펴봐요",
     admin: "집안일 항목을 관리해요"
@@ -286,14 +161,6 @@ function showScreen(name){
   if(name === "wallet"){
     loadWalletSummary();
     loadWalletHistory();
-  }
-
-  if(name === "stats"){
-    loadStats();
-  }
-
-  if(name === "admin"){
-    renderAdminTaskList();
   }
 }
 
@@ -306,8 +173,13 @@ function renderMembers(){
     btn.textContent = m.name;
     btn.onclick = () => {
       selectedMember = m.member_id;
+      selectedMemberRole = m.role;
+
+      selectedTask = null;
       document.querySelectorAll("#members button").forEach(b=>b.classList.remove("active"));
       btn.classList.add("active");
+
+      renderTasks();
     };
     box.appendChild(btn);
   });
@@ -317,8 +189,21 @@ function renderTasks(){
   const box = document.getElementById("tasks");
   box.innerHTML = "";
 
+  if(!selectedMemberRole){
+    box.innerHTML = `<div class="card">먼저 구성원을 선택해 주세요.</div>`;
+    return;
+  }
+
+  const allowedScopes = selectedMemberRole === "parent"
+    ? ["all", "adult"]
+    : ["all", "child"];
+
+  const filteredTasks = tasks.filter(t =>
+    allowedScopes.includes(String(t.target_scope || "all").toLowerCase())
+  );
+
   const grouped = {};
-  tasks.forEach(t=>{
+  filteredTasks.forEach(t=>{
     const category = t.category_name || "기타";
     if(!grouped[category]) grouped[category] = [];
     grouped[category].push(t);
@@ -362,8 +247,6 @@ async function saveLog(){
     return;
   }
 
-  showToast("기록 중...");
-
   const res = await fetch(API_URL, {
     method:"POST",
     body: JSON.stringify({
@@ -375,27 +258,74 @@ async function saveLog(){
 
   if(res.ok){
     showToast("기록했어요!");
-    loadTodayLogs();
+    await loadTodayLogs();
   }else{
     showToast("기록 실패");
   }
 }
 
+function renderMemberFilters(targetId, clickHandler){
+  const box = document.getElementById(targetId);
+  box.innerHTML = "";
+
+  const allBtn = document.createElement("button");
+  allBtn.textContent = "전체";
+  allBtn.className = "active";
+  allBtn.onclick = () => clickHandler("ALL");
+  box.appendChild(allBtn);
+
+  members.forEach(m=>{
+    const btn = document.createElement("button");
+    btn.textContent = m.name;
+    btn.onclick = () => clickHandler(m.member_id);
+    box.appendChild(btn);
+  });
+}
+
+function setFilterActive(targetId, selectedId){
+  document.querySelectorAll(`#${targetId} button`).forEach((btn, index)=>{
+    btn.classList.remove("active");
+
+    if(selectedId === "ALL" && index === 0) btn.classList.add("active");
+    if(members[index - 1] && members[index - 1].member_id === selectedId) btn.classList.add("active");
+  });
+}
+
+function setTodayLogFilter(memberId){
+  todayLogFilter = memberId;
+  setFilterActive("todayLogFilters", memberId);
+  renderTodayLogs();
+}
+
+function setWalletHistoryFilter(memberId){
+  walletHistoryFilter = memberId;
+  setFilterActive("walletHistoryFilters", memberId);
+  renderWalletHistory();
+}
+
 async function loadTodayLogs(){
-  const logs = await fetch(API_URL + "?action=getTodayLogs").then(r=>r.json());
+  todayLogs = await fetch(API_URL + "?action=getTodayLogs").then(r=>r.json());
+  renderTodayLogs();
+}
+
+function renderTodayLogs(){
   const box = document.getElementById("todayLogs");
 
-  if(!logs.length){
+  const filtered = todayLogFilter === "ALL"
+    ? todayLogs
+    : todayLogs.filter(log => getMemberIdByName(log.member_name) === todayLogFilter);
+
+  if(!filtered.length){
     box.innerHTML = "아직 기록이 없어요.";
     return;
   }
 
   box.innerHTML = "";
 
-  logs.forEach(log=>{
+  filtered.forEach(log=>{
     const time = new Date(log.created_at).toLocaleTimeString("ko-KR", {
-      hour: "2-digit",
-      minute: "2-digit"
+      hour:"2-digit",
+      minute:"2-digit"
     });
 
     const row = document.createElement("div");
@@ -405,38 +335,9 @@ async function loadTodayLogs(){
   });
 }
 
-async function loadStats(){
-  const stats = await fetch(API_URL + "?action=getStats").then(r=>r.json());
-
-  renderStatBox("todayStats", Object.values(stats.today), "score", "점");
-  renderStatBox("totalStats", Object.values(stats.total), "score", "점");
-
-  const taskBox = document.getElementById("taskStats");
-  taskBox.innerHTML = "";
-
-  Object.values(stats.byTask).forEach(task=>{
-    const total = Object.values(task.members).reduce((a,b)=>a + Number(b), 0);
-    const row = document.createElement("div");
-    row.className = "stat-row";
-    row.innerHTML = `<span>${task.task_name}</span><strong>${total}점</strong>`;
-    taskBox.appendChild(row);
-  });
-
-  if(!taskBox.innerHTML){
-    taskBox.innerHTML = "아직 활동 통계가 없어요.";
-  }
-}
-
-function renderStatBox(id, list, key, suffix){
-  const box = document.getElementById(id);
-  box.innerHTML = "";
-
-  list.forEach(item=>{
-    const row = document.createElement("div");
-    row.className = "stat-row";
-    row.innerHTML = `<span>${item.name}<br><small>${item.count}회</small></span><strong>${item[key]}${suffix}</strong>`;
-    box.appendChild(row);
-  });
+function getMemberIdByName(name){
+  const member = members.find(m => m.name === name);
+  return member ? member.member_id : null;
 }
 
 function renderSpendMembers(){
@@ -455,6 +356,9 @@ async function loadWalletSummary(){
   const summary = await fetch(API_URL + "?action=getWalletSummary").then(r=>r.json());
   const box = document.getElementById("walletSummary");
 
+  const total = summary.reduce((sum, item)=>sum + Number(item.balance || 0), 0);
+  document.getElementById("familyRewardTotal").textContent = total.toLocaleString() + "원";
+
   box.innerHTML = "";
 
   summary.forEach(item=>{
@@ -469,17 +373,25 @@ async function loadWalletSummary(){
 }
 
 async function loadWalletHistory(){
-  const history = await fetch(API_URL + "?action=getWalletHistory").then(r=>r.json());
+  walletHistory = await fetch(API_URL + "?action=getWalletHistory").then(r=>r.json());
+  renderWalletHistory();
+}
+
+function renderWalletHistory(){
   const box = document.getElementById("walletHistory");
 
-  if(!history.length){
+  const filtered = walletHistoryFilter === "ALL"
+    ? walletHistory
+    : walletHistory.filter(tx => tx.member_id === walletHistoryFilter);
+
+  if(!filtered.length){
     box.innerHTML = "아직 월렛 기록이 없어요.";
     return;
   }
 
   box.innerHTML = "";
 
-  history.slice(0, 30).forEach(tx=>{
+  filtered.slice(0, 30).forEach(tx=>{
     const amount = Number(tx.amount || 0);
     const sign = amount > 0 ? "+" : "";
     const typeLabel = amount > 0 ? "적립" : "사용";
@@ -502,11 +414,6 @@ async function spendWallet(){
   const amount = Number(document.getElementById("spendAmount").value);
   const description = document.getElementById("spendDesc").value;
 
-  if(!memberId){
-    showToast("구성원을 선택해 주세요");
-    return;
-  }
-
   if(!amount || amount <= 0){
     showToast("사용 금액을 입력해 주세요");
     return;
@@ -516,7 +423,7 @@ async function spendWallet(){
     method:"POST",
     body: JSON.stringify({
       action:"addWalletSpend",
-      member_id: memberId,
+      member_id:memberId,
       amount,
       description
     })
@@ -533,70 +440,11 @@ async function spendWallet(){
   }
 }
 
-function renderAdminCategories(){
-  const select = document.getElementById("adminCategory");
-  select.innerHTML = "";
-
-  const categoryMap = {};
-  tasks.forEach(t=>{
-    if(t.category_id && t.category_name){
-      categoryMap[t.category_id] = t.category_name;
-    }
-  });
-
-  Object.keys(categoryMap).forEach(categoryId=>{
-    const option = document.createElement("option");
-    option.value = categoryId;
-    option.textContent = categoryMap[categoryId];
-    select.appendChild(option);
-  });
-}
-
-function renderAdminTaskList(){
-  const box = document.getElementById("adminTaskList");
-  box.innerHTML = "";
-
-  if(!tasks.length){
-    box.innerHTML = "등록된 집안일이 없어요.";
-    return;
-  }
-
-  tasks.forEach(t=>{
-    const reward = String(t.reward_eligible).toUpperCase() === "TRUE" ? "리워드 O" : "리워드 X";
-
-    const row = document.createElement("div");
-    row.className = "stat-row";
-    row.innerHTML = `
-      <span>
-        <strong>${t.task_name}</strong><br>
-        <small>${t.category_name || "기타"} · ${t.base_score}점 · ${reward}</small>
-      </span>
-      <span>
-        <button class="secondary" onclick="editTaskNotice('${t.task_id}')">수정</button>
-        <button class="danger" onclick="deleteTaskNotice('${t.task_id}')">삭제</button>
-      </span>
-    `;
-    box.appendChild(row);
-  });
-}
-
-function addTaskFromAdmin(){
-  showToast("아직 Apps Script의 addTask 연결이 필요해요");
-}
-
-function editTaskNotice(taskId){
-  showToast("아직 updateTask 연결이 필요해요");
-}
-
-function deleteTaskNotice(taskId){
-  showToast("아직 deleteTask 연결이 필요해요");
-}
-
 function showToast(msg){
   const toast = document.getElementById("toast");
   toast.textContent = msg;
   toast.style.display = "block";
-  setTimeout(()=>toast.style.display="none", 1600);
+  setTimeout(()=>toast.style.display="none",1600);
 }
 
 init();
