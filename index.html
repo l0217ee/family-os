@@ -29,12 +29,13 @@ button.active{background:#111827;color:#fff}
 .tabs{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:430px;display:grid;grid-template-columns:repeat(5,1fr);background:#fff;border-top:1px solid #e5e7eb;z-index:9}
 .tab{border-radius:0;background:#fff;color:#6b7280;padding:12px 2px;font-size:12px}
 .tab.active{background:#eff6ff;color:#2563eb}
-.filter-tabs,.period-tabs,.type-tabs,.admin-tabs{display:grid;gap:6px;margin-bottom:10px}
+.filter-tabs,.period-tabs,.type-tabs,.admin-tabs,.task-group-tabs{display:grid;gap:6px;margin-bottom:10px}
 .filter-tabs{grid-template-columns:repeat(5,1fr)}
+.task-group-tabs{grid-template-columns:repeat(3,1fr)}
 .period-tabs,.type-tabs{grid-template-columns:repeat(4,1fr)}
 .admin-tabs{grid-template-columns:repeat(2,1fr)}
-.filter-tabs button,.period-tabs button,.type-tabs button,.admin-tabs button{font-size:12px;padding:9px 4px;border-radius:999px;background:#f3f4f6;color:#4b5563}
-.filter-tabs button.active,.period-tabs button.active,.type-tabs button.active,.admin-tabs button.active{background:#111827;color:#fff}
+.filter-tabs button,.period-tabs button,.type-tabs button,.admin-tabs button,.task-group-tabs button{font-size:12px;padding:9px 4px;border-radius:999px;background:#f3f4f6;color:#4b5563}
+.filter-tabs button.active,.period-tabs button.active,.type-tabs button.active,.admin-tabs button.active,.task-group-tabs button.active{background:#111827;color:#fff}
 input,select{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:13px;font-size:15px;background:#fff}
 .form{display:grid;gap:10px}
 .form-row{display:grid;grid-template-columns:72px 1fr;align-items:center;gap:10px}
@@ -94,6 +95,7 @@ input,select{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:13px
 
     <div class="section">
       <h2>무엇을 했나요?</h2>
+      <div id="taskGroupTabs" class="task-group-tabs"></div>
       <div id="tasks"></div>
     </div>
 
@@ -237,6 +239,10 @@ input,select{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:13px
             <input id="taskNameInput" type="text" placeholder="예: 설거지" />
           </div>
           <div class="form-row">
+            <label>그룹</label>
+            <input id="taskGroupInput" type="text" placeholder="예: 주방, 청소, 공부" />
+          </div>
+          <div class="form-row">
             <label>카테고리</label>
             <select id="taskCategoryInput"></select>
           </div>
@@ -296,6 +302,7 @@ let insightStats = null;
 let selectedMember = null;
 let selectedMemberRole = null;
 let selectedTask = null;
+let selectedTaskGroup = "ALL";
 let todayLogFilter = "ALL";
 let walletHistoryFilter = "ALL";
 let statsPeriod = "month";
@@ -309,6 +316,7 @@ async function init(){
   renderSpendMembers();
   renderMemberFilters("todayLogFilters", setTodayLogFilter);
   renderMemberFilters("walletHistoryFilters", setWalletHistoryFilter);
+  renderTaskGroupTabs();
   renderTasks();
   renderTaskCategorySelect();
   renderAdminLists();
@@ -366,10 +374,79 @@ function renderMembers(){
       document.querySelectorAll("#members button").forEach(b=>b.classList.remove("active"));
       btn.classList.add("active");
 
+      selectedTaskGroup = "ALL";
+      renderTaskGroupTabs();
       renderTasks();
     };
     box.appendChild(btn);
   });
+}
+
+function getTaskGroupName(task){
+  return String(task.task_group || "기타").trim() || "기타";
+}
+
+function getVisibleTasksByMemberRole(){
+  if(!selectedMemberRole) return [];
+
+  const allowedScopes = selectedMemberRole === "parent"
+    ? ["all", "adult"]
+    : ["all", "child"];
+
+  return tasks.filter(t =>
+    allowedScopes.includes(String(t.target_scope || "all").toLowerCase())
+  );
+}
+
+function getTaskGroupsForCurrentMember(){
+  const visibleTasks = getVisibleTasksByMemberRole();
+
+  return [...new Set(
+    visibleTasks.map(t => getTaskGroupName(t))
+  )].sort((a, b) => a.localeCompare(b, "ko"));
+}
+
+function renderTaskGroupTabs(){
+  const box = document.getElementById("taskGroupTabs");
+  box.innerHTML = "";
+
+  if(!selectedMemberRole){
+    selectedTaskGroup = "ALL";
+    return;
+  }
+
+  const groups = getTaskGroupsForCurrentMember();
+
+  if(!groups.length){
+    selectedTaskGroup = "ALL";
+    return;
+  }
+
+  const allBtn = document.createElement("button");
+  allBtn.textContent = "전체";
+  allBtn.className = selectedTaskGroup === "ALL" ? "active" : "";
+  allBtn.onclick = () => setTaskGroup("ALL");
+  box.appendChild(allBtn);
+
+  groups.forEach(groupName=>{
+    const btn = document.createElement("button");
+    btn.textContent = groupName;
+    btn.className = selectedTaskGroup === groupName ? "active" : "";
+    btn.onclick = () => setTaskGroup(groupName);
+    box.appendChild(btn);
+  });
+
+  if(selectedTaskGroup !== "ALL" && !groups.includes(selectedTaskGroup)){
+    selectedTaskGroup = "ALL";
+    renderTaskGroupTabs();
+  }
+}
+
+function setTaskGroup(groupName){
+  selectedTaskGroup = groupName;
+  selectedTask = null;
+  renderTaskGroupTabs();
+  renderTasks();
 }
 
 function renderTasks(){
@@ -377,17 +454,23 @@ function renderTasks(){
   box.innerHTML = "";
 
   if(!selectedMemberRole){
+    document.getElementById("taskGroupTabs").innerHTML = "";
     box.innerHTML = `<div class="card">먼저 누가 했는지를 골라 주세요.</div>`;
     return;
   }
 
-  const allowedScopes = selectedMemberRole === "parent"
-    ? ["all", "adult"]
-    : ["all", "child"];
+  renderTaskGroupTabs();
 
-  const filteredTasks = tasks.filter(t =>
-    allowedScopes.includes(String(t.target_scope || "all").toLowerCase())
-  );
+  let filteredTasks = getVisibleTasksByMemberRole();
+
+  if(selectedTaskGroup !== "ALL"){
+    filteredTasks = filteredTasks.filter(t => getTaskGroupName(t) === selectedTaskGroup);
+  }
+
+  if(!filteredTasks.length){
+    box.innerHTML = `<div class="card">이 그룹에 등록된 할 일이 없어요.</div>`;
+    return;
+  }
 
   const grouped = {};
   filteredTasks.forEach(t=>{
@@ -423,7 +506,6 @@ function renderTasks(){
     box.appendChild(group);
   });
 }
-
 async function saveLog(){
   if(!selectedMember){
     showToast("구성원을 선택해 주세요");
@@ -871,12 +953,13 @@ function renderAdminTaskList(){
   tasks.forEach(t=>{
     const scopeLabel = t.target_scope === "adult" ? "어른만" : t.target_scope === "child" ? "아이만" : "모두";
     const rewardLabel = String(t.reward_eligible).toUpperCase() === "TRUE" ? "상금 받음" : "상금 없음";
+    const taskGroupLabel = getTaskGroupName(t);
 
     const card = document.createElement("div");
     card.className = "admin-card";
     card.innerHTML = `
       <div class="admin-title">${t.task_name}</div>
-      <div class="admin-meta">${t.category_name || "기타"} · ${scopeLabel} · ${t.base_score}점 · ${rewardLabel}</div>
+      <div class="admin-meta">${taskGroupLabel} · ${t.category_name || "기타"} · ${scopeLabel} · ${t.base_score}점 · ${rewardLabel}</div>
       <div class="admin-actions">
         <button class="btn-small btn-gray" onclick="editTask('${t.task_id}')">수정</button>
         <button class="btn-small btn-danger" onclick="deleteTaskFromAdmin('${t.task_id}')">삭제</button>
@@ -959,6 +1042,7 @@ function editTask(taskId){
 
   document.getElementById("taskIdInput").value = t.task_id;
   document.getElementById("taskNameInput").value = t.task_name;
+  document.getElementById("taskGroupInput").value = getTaskGroupName(t);
   document.getElementById("taskCategoryInput").value = t.category_id;
   document.getElementById("taskScopeInput").value = t.target_scope || "all";
   document.getElementById("taskScoreInput").value = t.base_score || 1;
@@ -971,6 +1055,7 @@ function editTask(taskId){
 function resetTaskForm(){
   document.getElementById("taskIdInput").value = "";
   document.getElementById("taskNameInput").value = "";
+  document.getElementById("taskGroupInput").value = "";
   document.getElementById("taskCategoryInput").selectedIndex = 0;
   document.getElementById("taskScopeInput").value = "all";
   document.getElementById("taskScoreInput").value = 1;
@@ -980,6 +1065,7 @@ function resetTaskForm(){
 async function saveTaskFromAdmin(){
   const taskId = document.getElementById("taskIdInput").value;
   const taskName = document.getElementById("taskNameInput").value.trim();
+  const taskGroup = document.getElementById("taskGroupInput").value.trim() || "기타";
 
   if(!taskName){
     showToast("할 일 이름을 입력해 주세요");
@@ -994,6 +1080,7 @@ async function saveTaskFromAdmin(){
       action,
       task_id: taskId,
       task_name: taskName,
+      task_group: taskGroup,
       category_id: document.getElementById("taskCategoryInput").value,
       target_scope: document.getElementById("taskScopeInput").value,
       base_score: Number(document.getElementById("taskScoreInput").value || 1),
@@ -1037,6 +1124,7 @@ async function reloadAfterAdminChange(){
   renderSpendMembers();
   renderMemberFilters("todayLogFilters", setTodayLogFilter);
   renderMemberFilters("walletHistoryFilters", setWalletHistoryFilter);
+  renderTaskGroupTabs();
   renderTasks();
   renderTaskCategorySelect();
   renderAdminLists();
