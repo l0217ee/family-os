@@ -34,8 +34,20 @@ button.active{background:#111827;color:#fff}
 .filter-tabs button.active{background:#111827;color:#fff}
 input,select{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:13px;font-size:15px;background:#fff}
 .form{display:grid;gap:10px}
-.total-reward{font-size:30px;font-weight:900;color:#2563eb}
+.form-row{display:grid;grid-template-columns:72px 1fr;align-items:center;gap:10px}
+.form-row label{font-size:14px;color:#6b7280;font-weight:700}
+.total-reward{font-size:18px;font-weight:800;color:#6b7280;white-space:nowrap}
+.total-reward strong{color:#2563eb;font-size:22px}
+.earn-text{color:#2563eb}
+.spend-text{color:#dc2626}
 .badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:12px;font-weight:700}
+.wallet-row{display:grid;grid-template-columns:42px 52px 1fr 72px;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:13px}
+.wallet-row:last-child{border-bottom:0}
+.wallet-row .desc{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:#374151}
+.wallet-row .amount{text-align:right;font-weight:800}
+.reward-summary-row{display:grid;grid-template-columns:1fr auto;gap:8px;padding:10px 0;border-bottom:1px solid #e5e7eb}
+.reward-summary-row:last-child{border-bottom:0}
+.reward-summary-row small{grid-column:1 / -1}
 </style>
 </head>
 
@@ -68,7 +80,9 @@ input,select{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:13px
     <div class="section">
       <h2>가족 전체 리워드</h2>
       <div class="card">
-        <div class="total-reward" id="familyRewardTotal">0원</div>
+        <div class="total-reward" id="familyRewardTotal">
+          우리 가족이 <strong>0원</strong>을 모았어요!
+        </div>
       </div>
     </div>
 
@@ -80,9 +94,21 @@ input,select{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:13px
     <div class="section">
       <h2>리워드 사용하기</h2>
       <div class="card form">
-        <select id="spendMember"></select>
-        <input id="spendAmount" type="number" placeholder="사용 금액 예: 1000" />
-        <input id="spendDesc" type="text" placeholder="사용 내용 예: 간식, 장난감" />
+        <div class="form-row">
+          <label for="spendMember">지갑 주인</label>
+          <select id="spendMember"></select>
+        </div>
+
+        <div class="form-row">
+          <label for="spendAmount">쓴 돈</label>
+          <input id="spendAmount" type="number" placeholder="예: 1000" />
+        </div>
+
+        <div class="form-row">
+          <label for="spendDesc">산 물건</label>
+          <input id="spendDesc" type="text" placeholder="예: 간식, 장난감" />
+        </div>
+
         <button class="save" onclick="spendWallet()">사용 기록하기</button>
       </div>
     </div>
@@ -125,7 +151,9 @@ const API_URL =
 let members = [];
 let tasks = [];
 let todayLogs = [];
+let walletSummary = [];
 let walletHistory = [];
+
 let selectedMember = null;
 let selectedMemberRole = null;
 let selectedTask = null;
@@ -140,6 +168,7 @@ async function init(){
   renderSpendMembers();
   renderMemberFilters("todayLogFilters", setTodayLogFilter);
   renderMemberFilters("walletHistoryFilters", setWalletHistoryFilter);
+  renderTasks();
   await loadTodayLogs();
 }
 
@@ -174,8 +203,8 @@ function renderMembers(){
     btn.onclick = () => {
       selectedMember = m.member_id;
       selectedMemberRole = m.role;
-
       selectedTask = null;
+
       document.querySelectorAll("#members button").forEach(b=>b.classList.remove("active"));
       btn.classList.add("active");
 
@@ -259,6 +288,11 @@ async function saveLog(){
   if(res.ok){
     showToast("기록했어요!");
     await loadTodayLogs();
+
+    if(document.getElementById("walletScreen").classList.contains("active")){
+      loadWalletSummary();
+      loadWalletHistory();
+    }
   }else{
     showToast("기록 실패");
   }
@@ -353,20 +387,26 @@ function renderSpendMembers(){
 }
 
 async function loadWalletSummary(){
-  const summary = await fetch(API_URL + "?action=getWalletSummary").then(r=>r.json());
+  walletSummary = await fetch(API_URL + "?action=getWalletSummary").then(r=>r.json());
   const box = document.getElementById("walletSummary");
 
-  const total = summary.reduce((sum, item)=>sum + Number(item.balance || 0), 0);
-  document.getElementById("familyRewardTotal").textContent = total.toLocaleString() + "원";
+  const total = walletSummary.reduce((sum, item)=>sum + Number(item.balance || 0), 0);
+  document.getElementById("familyRewardTotal").innerHTML =
+    `우리 가족이 <strong>${total.toLocaleString()}원</strong>을 모았어요!`;
 
   box.innerHTML = "";
 
-  summary.forEach(item=>{
+  walletSummary.forEach(item=>{
     const row = document.createElement("div");
-    row.className = "stat-row";
+    row.className = "reward-summary-row";
     row.innerHTML = `
-      <span>${item.name}<br><small>적립 ${Number(item.earned).toLocaleString()}원 · 사용 ${Number(item.spent).toLocaleString()}원</small></span>
+      <span><strong>${item.name}</strong></span>
       <strong>${Number(item.balance).toLocaleString()}원</strong>
+      <small>
+        <span class="earn-text">적립 ${Number(item.earned).toLocaleString()}원</span>
+        ·
+        <span class="spend-text">사용 ${Number(item.spent).toLocaleString()}원</span>
+      </small>
     `;
     box.appendChild(row);
   });
@@ -395,15 +435,15 @@ function renderWalletHistory(){
     const amount = Number(tx.amount || 0);
     const sign = amount > 0 ? "+" : "";
     const typeLabel = amount > 0 ? "적립" : "사용";
+    const amountClass = amount > 0 ? "earn-text" : "spend-text";
 
     const row = document.createElement("div");
-    row.className = "stat-row";
+    row.className = "wallet-row";
     row.innerHTML = `
-      <span>
-        <span class="badge">${typeLabel}</span> ${tx.member_name}<br>
-        <small>${tx.description || ""}</small>
-      </span>
-      <strong>${sign}${amount.toLocaleString()}원</strong>
+      <span class="badge">${typeLabel}</span>
+      <strong>${tx.member_name}</strong>
+      <span class="desc">${tx.description || "-"}</span>
+      <span class="amount ${amountClass}">${sign}${amount.toLocaleString()}원</span>
     `;
     box.appendChild(row);
   });
@@ -416,6 +456,18 @@ async function spendWallet(){
 
   if(!amount || amount <= 0){
     showToast("사용 금액을 입력해 주세요");
+    return;
+  }
+
+  if(!walletSummary.length){
+    walletSummary = await fetch(API_URL + "?action=getWalletSummary").then(r=>r.json());
+  }
+
+  const owner = walletSummary.find(item => item.member_id === memberId);
+  const balance = owner ? Number(owner.balance || 0) : 0;
+
+  if(amount > balance){
+    showToast("잔액보다 많이 사용할 수 없어요");
     return;
   }
 
