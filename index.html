@@ -32,6 +32,9 @@ button.active{background:#111827;color:#fff}
 .filter-tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:10px}
 .filter-tabs button{font-size:12px;padding:9px 4px;border-radius:999px;background:#f3f4f6;color:#4b5563}
 .filter-tabs button.active{background:#111827;color:#fff}
+.period-tabs,.type-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
+.period-tabs button,.type-tabs button{font-size:12px;padding:9px 4px;border-radius:999px;background:#f3f4f6;color:#4b5563}
+.period-tabs button.active,.type-tabs button.active{background:#111827;color:#fff}
 input,select{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:13px;font-size:15px;background:#fff}
 .form{display:grid;gap:10px}
 .form-row{display:grid;grid-template-columns:72px 1fr;align-items:center;gap:10px}
@@ -48,6 +51,28 @@ input,select{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:13px
 .reward-summary-row{display:grid;grid-template-columns:1fr auto;gap:8px;padding:10px 0;border-bottom:1px solid #e5e7eb}
 .reward-summary-row:last-child{border-bottom:0}
 .reward-summary-row small{grid-column:1 / -1}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.summary-box{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:12px}
+.summary-box .label{font-size:12px;color:#6b7280;margin-bottom:4px}
+.summary-box .value{font-size:22px;font-weight:900}
+.change{font-size:13px;margin-top:8px;color:#6b7280}
+.category-card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:14px;margin-bottom:12px}
+.category-card h3{font-size:16px;margin:0 0 10px}
+.rank-list{display:grid;gap:6px;margin-bottom:12px}
+.rank-row{display:grid;grid-template-columns:28px 1fr auto;gap:8px;font-size:14px}
+.share-row{margin-bottom:12px}
+.share-title{display:flex;justify-content:space-between;font-size:14px;font-weight:800;margin-bottom:6px}
+.bar{height:18px;background:#e5e7eb;border-radius:999px;overflow:hidden;display:flex}
+.seg{height:100%;font-size:10px;color:#fff;text-align:center;line-height:18px;overflow:hidden}
+.seg:nth-child(1){background:#2563eb}
+.seg:nth-child(2){background:#16a34a}
+.seg:nth-child(3){background:#f59e0b}
+.seg:nth-child(4){background:#dc2626}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;font-size:12px;color:#6b7280}
+.member-card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:12px;margin-bottom:10px}
+.member-card h3{font-size:15px;margin:0 0 8px}
+.member-card div{font-size:13px;color:#374151;margin:4px 0}
+.empty{color:#6b7280;font-size:14px}
 </style>
 </head>
 
@@ -122,8 +147,43 @@ input,select{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:13px
 
   <div id="statsScreen" class="screen">
     <div class="section">
-      <h2>통계</h2>
-      <div class="card">통계 기능은 다음 단계에서 연결할 예정이에요.</div>
+      <h2>기간</h2>
+      <div id="periodTabs" class="period-tabs">
+        <button onclick="setStatsPeriod('today')">오늘</button>
+        <button onclick="setStatsPeriod('week')">이번 주</button>
+        <button class="active" onclick="setStatsPeriod('month')">이번 달</button>
+        <button onclick="setStatsPeriod('all')">전체</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>분석 유형</h2>
+      <div id="typeTabs" class="type-tabs">
+        <button class="active" onclick="setStatsType('family')">가족기여</button>
+        <button onclick="setStatsType('personal')">개인성장</button>
+        <button onclick="setStatsType('gratitude')">감사</button>
+        <button onclick="setStatsType('all')">전체</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>요약</h2>
+      <div id="statsSummary" class="card">불러오는 중...</div>
+    </div>
+
+    <div class="section">
+      <h2>카테고리별 기여도</h2>
+      <div id="categoryStats">불러오는 중...</div>
+    </div>
+
+    <div class="section">
+      <h2>항목별 기여 비중</h2>
+      <div id="itemShares" class="card">불러오는 중...</div>
+    </div>
+
+    <div class="section">
+      <h2>구성원별 많이 한 일</h2>
+      <div id="memberTopTasks">불러오는 중...</div>
     </div>
   </div>
 
@@ -153,12 +213,15 @@ let tasks = [];
 let todayLogs = [];
 let walletSummary = [];
 let walletHistory = [];
+let insightStats = null;
 
 let selectedMember = null;
 let selectedMemberRole = null;
 let selectedTask = null;
 let todayLogFilter = "ALL";
 let walletHistoryFilter = "ALL";
+let statsPeriod = "month";
+let statsType = "family";
 
 async function init(){
   members = await fetch(API_URL + "?action=getMembers").then(r=>r.json());
@@ -182,7 +245,7 @@ function showScreen(name){
   const subMap = {
     record: "오늘 한 일을 기록해요",
     wallet: "쌓은 리워드를 확인하고 사용해요",
-    stats: "우리 가족의 기여도를 살펴봐요",
+    stats: "우리 가족의 변화를 살펴봐요",
     admin: "집안일 항목을 관리해요"
   };
   document.getElementById("screenSub").textContent = subMap[name];
@@ -190,6 +253,10 @@ function showScreen(name){
   if(name === "wallet"){
     loadWalletSummary();
     loadWalletHistory();
+  }
+
+  if(name === "stats"){
+    loadInsightStats();
   }
 }
 
@@ -288,11 +355,6 @@ async function saveLog(){
   if(res.ok){
     showToast("기록했어요!");
     await loadTodayLogs();
-
-    if(document.getElementById("walletScreen").classList.contains("active")){
-      loadWalletSummary();
-      loadWalletHistory();
-    }
   }else{
     showToast("기록 실패");
   }
@@ -489,6 +551,177 @@ async function spendWallet(){
     loadWalletHistory();
   }else{
     showToast("사용 기록 실패");
+  }
+}
+
+function setStatsPeriod(period){
+  statsPeriod = period;
+  document.querySelectorAll("#periodTabs button").forEach(btn=>btn.classList.remove("active"));
+  event.target.classList.add("active");
+  loadInsightStats();
+}
+
+function setStatsType(type){
+  statsType = type;
+  document.querySelectorAll("#typeTabs button").forEach(btn=>btn.classList.remove("active"));
+  event.target.classList.add("active");
+  renderInsightStats();
+}
+
+async function loadInsightStats(){
+  insightStats = await fetch(API_URL + "?action=getInsightStats&period=" + statsPeriod).then(r=>r.json());
+  renderInsightStats();
+}
+
+function renderInsightStats(){
+  if(!insightStats) return;
+
+  renderStatsSummary();
+  renderCategoryStats();
+  renderItemShares();
+  renderMemberTopTasks();
+}
+
+function filterByStatsType(list){
+  if(statsType === "all") return list;
+  return list.filter(item => item.category_type === statsType || item.type === statsType);
+}
+
+function renderStatsSummary(){
+  const box = document.getElementById("statsSummary");
+  const s = insightStats.summary;
+
+  const diffText = statsPeriod === "all"
+    ? "전체 기간 기준이에요."
+    : s.count_diff >= 0
+      ? `이전 기간보다 ${s.count_diff}번 더 참여했어요.`
+      : `이전 기간보다 ${Math.abs(s.count_diff)}번 적게 기록됐어요.`;
+
+  box.innerHTML = `
+    <div class="summary-grid">
+      <div class="summary-box">
+        <div class="label">총 활동 수</div>
+        <div class="value">${s.total_count}회</div>
+      </div>
+      <div class="summary-box">
+        <div class="label">총 기여 점수</div>
+        <div class="value">${s.total_score}점</div>
+      </div>
+    </div>
+    <div class="change">${diffText}</div>
+  `;
+}
+
+function renderCategoryStats(){
+  const box = document.getElementById("categoryStats");
+  const categories = filterByStatsType(insightStats.categoryStats);
+
+  if(!categories.length){
+    box.innerHTML = `<div class="card empty">아직 해당 유형의 기록이 없어요.</div>`;
+    return;
+  }
+
+  box.innerHTML = "";
+
+  categories.forEach(category=>{
+    const card = document.createElement("div");
+    card.className = "category-card";
+
+    card.innerHTML = `
+      <h3>${category.category_name}</h3>
+      <div class="badge">많이 한 사람</div>
+      <div class="rank-list">
+        ${renderRankRows(category.count_ranking, "count", "회")}
+      </div>
+      <div class="badge">어려운 일을 많이 한 사람</div>
+      <div class="rank-list">
+        ${renderRankRows(category.score_ranking, "score", "점")}
+      </div>
+    `;
+
+    box.appendChild(card);
+  });
+}
+
+function renderRankRows(list, key, suffix){
+  return list.map((item, index)=>`
+    <div class="rank-row">
+      <strong>${index + 1}</strong>
+      <span>${item.name}</span>
+      <strong>${item[key]}${suffix}</strong>
+    </div>
+  `).join("");
+}
+
+function renderItemShares(){
+  const box = document.getElementById("itemShares");
+  const items = filterByStatsType(insightStats.itemShares);
+
+  if(!items.length){
+    box.innerHTML = "아직 항목별 기록이 없어요.";
+    return;
+  }
+
+  box.innerHTML = "";
+
+  items.forEach(item=>{
+    const wrap = document.createElement("div");
+    wrap.className = "share-row";
+
+    const scopeLabel = item.target_scope === "adult"
+      ? "어른 활동"
+      : item.target_scope === "child"
+        ? "아이 활동"
+        : "가족 활동";
+
+    wrap.innerHTML = `
+      <div class="share-title">
+        <span>${item.task_name}</span>
+        <small>${scopeLabel}</small>
+      </div>
+      <div class="bar">
+        ${item.members.filter(m=>m.count > 0).map(m=>`
+          <div class="seg" style="width:${m.percent}%">${m.percent}%</div>
+        `).join("")}
+      </div>
+      <div class="legend">
+        ${item.members.filter(m=>m.count > 0).map(m=>`${m.name} ${m.percent}%`).join(" · ")}
+      </div>
+    `;
+
+    box.appendChild(wrap);
+  });
+}
+
+function renderMemberTopTasks(){
+  const box = document.getElementById("memberTopTasks");
+  const membersData = insightStats.memberTopTasks;
+
+  box.innerHTML = "";
+
+  membersData.forEach(member=>{
+    const filteredCategories = filterByStatsType(member.categories);
+
+    if(!filteredCategories.length) return;
+
+    const card = document.createElement("div");
+    card.className = "member-card";
+
+    card.innerHTML = `
+      <h3>${member.name}</h3>
+      ${filteredCategories.map(category=>`
+        <div>
+          <strong>${category.category_name}</strong>:
+          ${category.top_tasks.map(t=>`${t.task_name} ${t.count}회`).join(", ")}
+        </div>
+      `).join("")}
+    `;
+
+    box.appendChild(card);
+  });
+
+  if(!box.innerHTML){
+    box.innerHTML = `<div class="card empty">아직 구성원별 기록이 없어요.</div>`;
   }
 }
 
