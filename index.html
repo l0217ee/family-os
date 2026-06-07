@@ -17,7 +17,7 @@ body{
   min-height:100vh;
   margin:0 auto;
   background:#fff;
-  padding:22px 18px 80px;
+  padding:22px 18px 92px;
 }
 h1{font-size:26px;margin:0 0 4px}
 .sub{color:#6b7280;margin-bottom:22px}
@@ -55,6 +55,14 @@ button.active{
   padding:16px;
   margin-top:10px;
 }
+.danger{
+  background:#fee2e2;
+  color:#991b1b;
+}
+.secondary{
+  background:#f3f4f6;
+  color:#374151;
+}
 .card{
   background:#f9fafb;
   border:1px solid #e5e7eb;
@@ -65,49 +73,175 @@ button.active{
 .stat-row{
   display:flex;
   justify-content:space-between;
-  padding:8px 0;
+  gap:12px;
+  padding:10px 0;
   border-bottom:1px solid #e5e7eb;
 }
 .stat-row:last-child{border-bottom:0}
+.stat-row small{
+  color:#6b7280;
+  font-weight:400;
+}
 .toast{
   position:fixed;
   left:50%;
-  bottom:24px;
+  bottom:76px;
   transform:translateX(-50%);
   background:#111827;
   color:#fff;
   padding:12px 18px;
   border-radius:999px;
   display:none;
+  z-index:10;
+}
+.screen{display:none}
+.screen.active{display:block}
+.tabs{
+  position:fixed;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:430px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  background:#fff;
+  border-top:1px solid #e5e7eb;
+  z-index:9;
+}
+.tab{
+  border-radius:0;
+  background:#fff;
+  color:#6b7280;
+  padding:12px 4px;
+  font-size:13px;
+}
+.tab.active{
+  background:#eff6ff;
+  color:#2563eb;
+}
+input, select{
+  width:100%;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:13px;
+  font-size:15px;
+  background:#fff;
+}
+.form{
+  display:grid;
+  gap:10px;
+}
+.badge{
+  display:inline-block;
+  padding:4px 8px;
+  border-radius:999px;
+  background:#eef2ff;
+  color:#3730a3;
+  font-size:12px;
+  font-weight:700;
+}
+.empty{
+  color:#6b7280;
+  font-size:14px;
 }
 </style>
 </head>
 <body>
+
 <div class="app">
   <h1>Family OS</h1>
-  <div class="sub">오늘의 기여를 기록해요</div>
+  <div id="screenSub" class="sub">오늘의 기여를 기록해요</div>
 
-  <div class="section">
-    <h2>누가 했나요?</h2>
-    <div id="members" class="grid"></div>
+  <!-- 기록 탭 -->
+  <div id="recordScreen" class="screen active">
+    <div class="section">
+      <h2>누가 했나요?</h2>
+      <div id="members" class="grid"></div>
+    </div>
+
+    <div class="section">
+      <h2>무엇을 했나요?</h2>
+      <div id="tasks"></div>
+    </div>
+
+    <button class="save" onclick="saveLog()">기록하기</button>
+
+    <div class="section">
+      <h2>오늘 기록</h2>
+      <div id="todayLogs" class="card">불러오는 중...</div>
+    </div>
   </div>
 
-  <div class="section">
-    <h2>무엇을 했나요?</h2>
-    <div id="tasks"></div>
+  <!-- 월렛 탭 -->
+  <div id="walletScreen" class="screen">
+    <div class="section">
+      <h2>리워드 잔액</h2>
+      <div id="walletSummary" class="card">불러오는 중...</div>
+    </div>
+
+    <div class="section">
+      <h2>리워드 사용하기</h2>
+      <div class="card form">
+        <select id="spendMember"></select>
+        <input id="spendAmount" type="number" placeholder="사용 금액 예: 1000" />
+        <input id="spendDesc" type="text" placeholder="사용 내용 예: 간식, 장난감" />
+        <button class="save" onclick="spendWallet()">사용 기록하기</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>월렛 기록</h2>
+      <div id="walletHistory" class="card">불러오는 중...</div>
+    </div>
   </div>
 
-  <button class="save" onclick="saveLog()">기록하기</button>
+  <!-- 통계 탭 -->
+  <div id="statsScreen" class="screen">
+    <div class="section">
+      <h2>오늘의 기여도</h2>
+      <div id="todayStats" class="card">불러오는 중...</div>
+    </div>
 
-  <div class="section">
-    <h2>오늘의 기여도</h2>
-    <div id="todayStats" class="card">불러오는 중...</div>
+    <div class="section">
+      <h2>누적 기여도</h2>
+      <div id="totalStats" class="card">불러오는 중...</div>
+    </div>
+
+    <div class="section">
+      <h2>활동별 기여</h2>
+      <div id="taskStats" class="card">불러오는 중...</div>
+    </div>
   </div>
 
-  <div class="section">
-    <h2>오늘 기록</h2>
-    <div id="todayLogs" class="card">불러오는 중...</div>
+  <!-- 관리 탭 -->
+  <div id="adminScreen" class="screen">
+    <div class="section">
+      <h2>집안일 추가</h2>
+      <div class="card form">
+        <input id="adminTaskName" type="text" placeholder="집안일 이름 예: 설거지" />
+        <select id="adminCategory"></select>
+        <input id="adminScore" type="number" placeholder="기본 점수 예: 1" value="1" />
+        <select id="adminRewardEligible">
+          <option value="TRUE">리워드 적립함</option>
+          <option value="FALSE">리워드 적립 안 함</option>
+        </select>
+        <button class="save" onclick="addTaskFromAdmin()">집안일 추가하기</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>집안일 목록</h2>
+      <div id="adminTaskList" class="card">불러오는 중...</div>
+    </div>
   </div>
+</div>
+
+<div class="tabs">
+  <button id="recordTab" class="tab active" onclick="showScreen('record')">기록</button>
+  <button id="walletTab" class="tab" onclick="showScreen('wallet')">월렛</button>
+  <button id="statsTab" class="tab" onclick="showScreen('stats')">통계</button>
+  <button id="adminTab" class="tab" onclick="showScreen('admin')">관리</button>
 </div>
 
 <div id="toast" class="toast"></div>
@@ -127,8 +261,40 @@ async function init(){
 
   renderMembers();
   renderTasks();
-  loadStats();
+  renderSpendMembers();
+  renderAdminCategories();
+  renderAdminTaskList();
+
   loadTodayLogs();
+}
+
+function showScreen(name){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+
+  document.getElementById(name + "Screen").classList.add("active");
+  document.getElementById(name + "Tab").classList.add("active");
+
+  const subMap = {
+    record: "오늘의 기여를 기록해요",
+    wallet: "쌓은 리워드를 확인하고 사용해요",
+    stats: "우리 가족의 기여도를 살펴봐요",
+    admin: "집안일 항목을 관리해요"
+  };
+  document.getElementById("screenSub").textContent = subMap[name];
+
+  if(name === "wallet"){
+    loadWalletSummary();
+    loadWalletHistory();
+  }
+
+  if(name === "stats"){
+    loadStats();
+  }
+
+  if(name === "admin"){
+    renderAdminTaskList();
+  }
 }
 
 function renderMembers(){
@@ -209,25 +375,10 @@ async function saveLog(){
 
   if(res.ok){
     showToast("기록했어요!");
-    loadStats();
     loadTodayLogs();
   }else{
     showToast("기록 실패");
   }
-}
-
-async function loadStats(){
-  const stats = await fetch(API_URL + "?action=getStats").then(r=>r.json());
-  const box = document.getElementById("todayStats");
-
-  box.innerHTML = "";
-
-  Object.values(stats.today).forEach(item=>{
-    const row = document.createElement("div");
-    row.className = "stat-row";
-    row.innerHTML = `<span>${item.name}</span><strong>${item.score}점</strong>`;
-    box.appendChild(row);
-  });
 }
 
 async function loadTodayLogs(){
@@ -252,6 +403,193 @@ async function loadTodayLogs(){
     row.innerHTML = `<span>${time}</span><strong>${log.member_name} · ${log.task_name}</strong>`;
     box.appendChild(row);
   });
+}
+
+async function loadStats(){
+  const stats = await fetch(API_URL + "?action=getStats").then(r=>r.json());
+
+  renderStatBox("todayStats", Object.values(stats.today), "score", "점");
+  renderStatBox("totalStats", Object.values(stats.total), "score", "점");
+
+  const taskBox = document.getElementById("taskStats");
+  taskBox.innerHTML = "";
+
+  Object.values(stats.byTask).forEach(task=>{
+    const total = Object.values(task.members).reduce((a,b)=>a + Number(b), 0);
+    const row = document.createElement("div");
+    row.className = "stat-row";
+    row.innerHTML = `<span>${task.task_name}</span><strong>${total}점</strong>`;
+    taskBox.appendChild(row);
+  });
+
+  if(!taskBox.innerHTML){
+    taskBox.innerHTML = "아직 활동 통계가 없어요.";
+  }
+}
+
+function renderStatBox(id, list, key, suffix){
+  const box = document.getElementById(id);
+  box.innerHTML = "";
+
+  list.forEach(item=>{
+    const row = document.createElement("div");
+    row.className = "stat-row";
+    row.innerHTML = `<span>${item.name}<br><small>${item.count}회</small></span><strong>${item[key]}${suffix}</strong>`;
+    box.appendChild(row);
+  });
+}
+
+function renderSpendMembers(){
+  const select = document.getElementById("spendMember");
+  select.innerHTML = "";
+
+  members.forEach(m=>{
+    const option = document.createElement("option");
+    option.value = m.member_id;
+    option.textContent = m.name;
+    select.appendChild(option);
+  });
+}
+
+async function loadWalletSummary(){
+  const summary = await fetch(API_URL + "?action=getWalletSummary").then(r=>r.json());
+  const box = document.getElementById("walletSummary");
+
+  box.innerHTML = "";
+
+  summary.forEach(item=>{
+    const row = document.createElement("div");
+    row.className = "stat-row";
+    row.innerHTML = `
+      <span>${item.name}<br><small>적립 ${Number(item.earned).toLocaleString()}원 · 사용 ${Number(item.spent).toLocaleString()}원</small></span>
+      <strong>${Number(item.balance).toLocaleString()}원</strong>
+    `;
+    box.appendChild(row);
+  });
+}
+
+async function loadWalletHistory(){
+  const history = await fetch(API_URL + "?action=getWalletHistory").then(r=>r.json());
+  const box = document.getElementById("walletHistory");
+
+  if(!history.length){
+    box.innerHTML = "아직 월렛 기록이 없어요.";
+    return;
+  }
+
+  box.innerHTML = "";
+
+  history.slice(0, 30).forEach(tx=>{
+    const amount = Number(tx.amount || 0);
+    const sign = amount > 0 ? "+" : "";
+    const typeLabel = amount > 0 ? "적립" : "사용";
+
+    const row = document.createElement("div");
+    row.className = "stat-row";
+    row.innerHTML = `
+      <span>
+        <span class="badge">${typeLabel}</span> ${tx.member_name}<br>
+        <small>${tx.description || ""}</small>
+      </span>
+      <strong>${sign}${amount.toLocaleString()}원</strong>
+    `;
+    box.appendChild(row);
+  });
+}
+
+async function spendWallet(){
+  const memberId = document.getElementById("spendMember").value;
+  const amount = Number(document.getElementById("spendAmount").value);
+  const description = document.getElementById("spendDesc").value;
+
+  if(!memberId){
+    showToast("구성원을 선택해 주세요");
+    return;
+  }
+
+  if(!amount || amount <= 0){
+    showToast("사용 금액을 입력해 주세요");
+    return;
+  }
+
+  const res = await fetch(API_URL, {
+    method:"POST",
+    body: JSON.stringify({
+      action:"addWalletSpend",
+      member_id: memberId,
+      amount,
+      description
+    })
+  }).then(r=>r.json());
+
+  if(res.ok){
+    showToast("사용 기록을 저장했어요");
+    document.getElementById("spendAmount").value = "";
+    document.getElementById("spendDesc").value = "";
+    loadWalletSummary();
+    loadWalletHistory();
+  }else{
+    showToast("사용 기록 실패");
+  }
+}
+
+function renderAdminCategories(){
+  const select = document.getElementById("adminCategory");
+  select.innerHTML = "";
+
+  const categoryMap = {};
+  tasks.forEach(t=>{
+    if(t.category_id && t.category_name){
+      categoryMap[t.category_id] = t.category_name;
+    }
+  });
+
+  Object.keys(categoryMap).forEach(categoryId=>{
+    const option = document.createElement("option");
+    option.value = categoryId;
+    option.textContent = categoryMap[categoryId];
+    select.appendChild(option);
+  });
+}
+
+function renderAdminTaskList(){
+  const box = document.getElementById("adminTaskList");
+  box.innerHTML = "";
+
+  if(!tasks.length){
+    box.innerHTML = "등록된 집안일이 없어요.";
+    return;
+  }
+
+  tasks.forEach(t=>{
+    const reward = String(t.reward_eligible).toUpperCase() === "TRUE" ? "리워드 O" : "리워드 X";
+
+    const row = document.createElement("div");
+    row.className = "stat-row";
+    row.innerHTML = `
+      <span>
+        <strong>${t.task_name}</strong><br>
+        <small>${t.category_name || "기타"} · ${t.base_score}점 · ${reward}</small>
+      </span>
+      <span>
+        <button class="secondary" onclick="editTaskNotice('${t.task_id}')">수정</button>
+        <button class="danger" onclick="deleteTaskNotice('${t.task_id}')">삭제</button>
+      </span>
+    `;
+    box.appendChild(row);
+  });
+}
+
+function addTaskFromAdmin(){
+  showToast("아직 Apps Script의 addTask 연결이 필요해요");
+}
+
+function editTaskNotice(taskId){
+  showToast("아직 updateTask 연결이 필요해요");
+}
+
+function deleteTaskNotice(taskId){
+  showToast("아직 deleteTask 연결이 필요해요");
 }
 
 function showToast(msg){
