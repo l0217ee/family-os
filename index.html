@@ -8,272 +8,119 @@
 *{box-sizing:border-box}
 body{margin:0;background:#f4f6f8;font-family:Arial,"Noto Sans KR",sans-serif;color:#111827}
 .app{max-width:430px;min-height:100vh;margin:0 auto;background:#fff;padding:22px 18px 92px}
-h1{font-size:26px;margin:0 0 4px}
-.sub{color:#6b7280;margin-bottom:22px}
-.section{margin:24px 0}
-.section h2{font-size:17px;margin-bottom:12px}
+h1{font-size:26px;margin:0 0 4px}.sub{color:#6b7280;margin-bottom:22px}
+.section{margin:24px 0}.section h2{font-size:17px;margin-bottom:12px}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 button{border:0;border-radius:14px;padding:13px 8px;background:#eef2ff;font-size:14px;font-weight:700}
 button.active{background:#111827;color:#fff}
-.task-group{margin-bottom:18px}
-.task-group-title{font-size:14px;color:#6b7280;margin:0 0 8px}
+.task-group{margin-bottom:18px}.task-group-title{font-size:14px;color:#6b7280;margin:0 0 8px}
 .tasks{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .save{width:100%;background:#2563eb;color:#fff;font-size:17px;padding:16px;margin-top:10px}
 .card{background:#f9fafb;border:1px solid #e5e7eb;border-radius:18px;padding:16px;margin-bottom:12px}
 .stat-row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #e5e7eb}
-.stat-row:last-child{border-bottom:0}
-.stat-row small{color:#6b7280;font-weight:400}
+.stat-row:last-child{border-bottom:0}.stat-row small{color:#6b7280;font-weight:400}
 .toast{position:fixed;left:50%;bottom:76px;transform:translateX(-50%);background:#111827;color:#fff;padding:12px 18px;border-radius:999px;display:none;z-index:10}
-.screen{display:none}
-.screen.active{display:block}
-.tabs{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:430px;display:grid;grid-template-columns:repeat(5,1fr);background:#fff;border-top:1px solid #e5e7eb;z-index:9}
-.tab{border-radius:0;background:#fff;color:#6b7280;padding:12px 2px;font-size:12px}
-.tab.active{background:#eff6ff;color:#2563eb}
+.screen{display:none}.screen.active{display:block}
+.tabs{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:430px;display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-top:1px solid #e5e7eb;z-index:9}
+.tab{border-radius:0;background:#fff;color:#6b7280;padding:12px 2px;font-size:12px}.tab.active{background:#eff6ff;color:#2563eb}
 .filter-tabs,.period-tabs,.type-tabs,.admin-tabs,.task-group-tabs{display:grid;gap:6px;margin-bottom:10px}
-.filter-tabs{grid-template-columns:repeat(5,1fr)}
-.task-group-tabs{grid-template-columns:repeat(3,1fr)}
-.period-tabs,.type-tabs{grid-template-columns:repeat(4,1fr)}
-.admin-tabs{grid-template-columns:repeat(2,1fr)}
+.filter-tabs{grid-template-columns:repeat(5,1fr)}.task-group-tabs{grid-template-columns:repeat(3,1fr)}
+.period-tabs,.type-tabs{grid-template-columns:repeat(4,1fr)}.admin-tabs{grid-template-columns:repeat(2,1fr)}
 .filter-tabs button,.period-tabs button,.type-tabs button,.admin-tabs button,.task-group-tabs button{font-size:12px;padding:9px 4px;border-radius:999px;background:#f3f4f6;color:#4b5563}
 .filter-tabs button.active,.period-tabs button.active,.type-tabs button.active,.admin-tabs button.active,.task-group-tabs button.active{background:#111827;color:#fff}
 input,select{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:13px;font-size:15px;background:#fff}
-.form{display:grid;gap:10px}
-.form-row{display:grid;grid-template-columns:72px 1fr;align-items:center;gap:10px}
+.form{display:grid;gap:10px}.form-row{display:grid;grid-template-columns:72px 1fr;align-items:center;gap:10px}
 .form-row label{font-size:14px;color:#6b7280;font-weight:700}
-.total-reward{font-size:18px;font-weight:800;color:#6b7280;white-space:nowrap}
-.total-reward strong{color:#2563eb;font-size:22px}
-.earn-text{color:#2563eb}
-.spend-text{color:#dc2626}
+.total-reward{font-size:18px;font-weight:800;color:#6b7280;white-space:nowrap}.total-reward strong{color:#2563eb;font-size:22px}
+.earn-text{color:#2563eb}.spend-text{color:#dc2626}
 .badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:12px;font-weight:700}
 .wallet-row{display:grid;grid-template-columns:42px 52px 1fr 72px;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid #e5e7eb;font-size:13px}
-.wallet-row:last-child{border-bottom:0}
-.wallet-row .desc{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:#374151}
-.wallet-row .amount{text-align:right;font-weight:800}
+.wallet-row:last-child{border-bottom:0}.wallet-row .desc{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:#374151}.wallet-row .amount{text-align:right;font-weight:800}
 .reward-summary-row{display:grid;grid-template-columns:1fr auto;gap:8px;padding:10px 0;border-bottom:1px solid #e5e7eb}
-.reward-summary-row:last-child{border-bottom:0}
-.reward-summary-row small{grid-column:1 / -1}
-.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.summary-box{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:12px}
-.summary-box .label{font-size:12px;color:#6b7280;margin-bottom:4px}
-.summary-box .value{font-size:22px;font-weight:900}
+.reward-summary-row:last-child{border-bottom:0}.reward-summary-row small{grid-column:1 / -1}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.summary-box{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:12px}
+.summary-box .label{font-size:12px;color:#6b7280;margin-bottom:4px}.summary-box .value{font-size:22px;font-weight:900}
 .change{font-size:13px;margin-top:8px;color:#6b7280}
-.category-card,.member-card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:14px;margin-bottom:12px}
+.category-card,.member-card,.admin-card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:14px;margin-bottom:12px}
 .category-card h3,.member-card h3{font-size:16px;margin:0 0 10px}
-.rank-list{display:grid;gap:6px;margin-bottom:12px}
-.rank-row{display:grid;grid-template-columns:28px 1fr auto;gap:8px;font-size:14px}
-.share-row{margin-bottom:12px}
-.share-title{display:flex;justify-content:space-between;font-size:14px;font-weight:800;margin-bottom:6px}
-.bar{height:18px;background:#e5e7eb;border-radius:999px;overflow:hidden;display:flex}
-.seg{height:100%;font-size:10px;color:#fff;text-align:center;line-height:18px;overflow:hidden}
-.seg:nth-child(1){background:#2563eb}
-.seg:nth-child(2){background:#16a34a}
-.seg:nth-child(3){background:#f59e0b}
-.seg:nth-child(4){background:#dc2626}
-.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;font-size:12px;color:#6b7280}
-.empty{color:#6b7280;font-size:14px}
-.admin-card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:14px;margin-bottom:12px}
-.admin-title{font-size:16px;font-weight:900;margin-bottom:4px}
-.admin-meta{font-size:13px;color:#6b7280;margin-bottom:10px}
-.admin-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.btn-small{padding:10px 8px;font-size:13px}
-.btn-danger{background:#fee2e2;color:#991b1b}
-.btn-gray{background:#f3f4f6;color:#374151}
-.help{font-size:13px;color:#6b7280;line-height:1.5}
+.rank-list{display:grid;gap:6px;margin-bottom:12px}.rank-row{display:grid;grid-template-columns:28px 1fr auto;gap:8px;font-size:14px}
+.share-row{margin-bottom:12px}.share-title{display:flex;justify-content:space-between;font-size:14px;font-weight:800;margin-bottom:6px}
+.bar{height:18px;background:#e5e7eb;border-radius:999px;overflow:hidden;display:flex}.seg{height:100%;font-size:10px;color:#fff;text-align:center;line-height:18px;overflow:hidden}
+.seg:nth-child(1){background:#2563eb}.seg:nth-child(2){background:#16a34a}.seg:nth-child(3){background:#f59e0b}.seg:nth-child(4){background:#dc2626}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;font-size:12px;color:#6b7280}.empty{color:#6b7280;font-size:14px}
+.admin-title{font-size:16px;font-weight:900;margin-bottom:4px}.admin-meta{font-size:13px;color:#6b7280;margin-bottom:10px}
+.admin-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.btn-small{padding:10px 8px;font-size:13px}.btn-danger{background:#fee2e2;color:#991b1b}.btn-gray{background:#f3f4f6;color:#374151}
 </style>
 </head>
-
 <body>
 <div class="app">
   <h1>집안일 함께하기</h1>
   <div id="screenSub" class="sub">오늘 한 일을 기록해요</div>
 
   <div id="recordScreen" class="screen active">
-    <div class="section">
-      <h2>누가 했나요?</h2>
-      <div id="members" class="grid"></div>
-    </div>
-
-    <div class="section">
-      <h2>무엇을 했나요?</h2>
-      <div id="taskGroupTabs" class="task-group-tabs"></div>
-      <div id="tasks"></div>
-    </div>
-
+    <div class="section"><h2>누가 했나요?</h2><div id="members" class="grid"></div></div>
+    <div class="section"><h2>무엇을 했나요?</h2><div id="taskGroupTabs" class="task-group-tabs"></div><div id="tasks"></div></div>
     <button class="save" onclick="saveLog()">기록하기</button>
-
-    <div class="section">
-      <h2>오늘 한 일</h2>
-      <div id="todayLogFilters" class="filter-tabs"></div>
-      <div id="todayLogs" class="card">불러오는 중...</div>
-    </div>
+    <div class="section"><h2>오늘 한 일</h2><div id="todayLogFilters" class="filter-tabs"></div><div id="todayLogs" class="card">불러오는 중...</div></div>
   </div>
 
   <div id="walletScreen" class="screen">
-    <div class="section">
-      <h2>우리 가족은 상금을 얼마나 모았을까요?</h2>
-      <div class="card">
-        <div class="total-reward" id="familyRewardTotal">
-          우리 가족이 <strong>0원</strong>을 모았어요!
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>각자는 상금을 얼마나 모았을까요?</h2>
-      <div id="walletSummary" class="card">불러오는 중...</div>
-    </div>
-
+    <div class="section"><h2>우리 가족은 상금을 얼마나 모았을까요?</h2><div class="card"><div class="total-reward" id="familyRewardTotal">우리 가족이 <strong>0원</strong>을 모았어요!</div></div></div>
+    <div class="section"><h2>각자는 상금을 얼마나 모았을까요?</h2><div id="walletSummary" class="card">불러오는 중...</div></div>
     <div class="section">
       <h2>상금을 써 볼까요?</h2>
       <div class="card form">
-        <div class="form-row">
-          <label for="spendMember">지갑 주인</label>
-          <select id="spendMember"></select>
-        </div>
-
-        <div class="form-row">
-          <label for="spendAmount">쓴 상금</label>
-          <input id="spendAmount" type="number" placeholder="예: 1000" />
-        </div>
-
-        <div class="form-row">
-          <label for="spendDesc">산 물건</label>
-          <input id="spendDesc" type="text" placeholder="예: 포카칩, 딸깍이" />
-        </div>
-
+        <div class="form-row"><label for="spendMember">지갑 주인</label><select id="spendMember"></select></div>
+        <div class="form-row"><label for="spendAmount">쓴 상금</label><input id="spendAmount" type="number" placeholder="예: 1000" /></div>
+        <div class="form-row"><label for="spendDesc">산 물건</label><input id="spendDesc" type="text" placeholder="예: 포카칩, 딸깍이" /></div>
         <button class="save" onclick="spendWallet()">기록하기</button>
       </div>
     </div>
-
-    <div class="section">
-      <h2>지갑 기록</h2>
-      <div id="walletHistoryFilters" class="filter-tabs"></div>
-      <div id="walletHistory" class="card">불러오는 중...</div>
-    </div>
+    <div class="section"><h2>지갑 기록</h2><div id="walletHistoryFilters" class="filter-tabs"></div><div id="walletHistory" class="card">불러오는 중...</div></div>
   </div>
 
   <div id="statsScreen" class="screen">
-    <div class="section">
-      <h2>얼마 동안의 기록을 볼까요?</h2>
-      <div id="periodTabs" class="period-tabs">
-        <button onclick="setStatsPeriod('today')">오늘</button>
-        <button onclick="setStatsPeriod('week')">이번 주</button>
-        <button class="active" onclick="setStatsPeriod('month')">이번 달</button>
-        <button onclick="setStatsPeriod('all')">전체</button>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>무슨 기록을 볼까요?</h2>
-      <div id="typeTabs" class="type-tabs">
-        <button class="active" onclick="setStatsType('family')">집안일</button>
-        <button onclick="setStatsType('personal')">자기계발</button>
-        <button onclick="setStatsType('all')">전체</button>
-      </div>
-    </div>
-
-    <div class="section">
-      <h2>요약</h2>
-      <div id="statsSummary" class="card">불러오는 중...</div>
-    </div>
-
-    <div class="section">
-      <h2>누가 열심히 했을까요?</h2>
-      <div id="categoryStats">불러오는 중...</div>
-    </div>
-
-    <div class="section">
-      <h2>누가 무슨 일을 했을까요?</h2>
-      <div id="itemShares" class="card">불러오는 중...</div>
-    </div>
-
-    <div class="section">
-      <h2>각자 무슨일을 많이 했을까요?</h2>
-      <div id="memberTopTasks">불러오는 중...</div>
-    </div>
+    <div class="section"><h2>얼마 동안의 기록을 볼까요?</h2><div id="periodTabs" class="period-tabs"><button onclick="setStatsPeriod('today')">오늘</button><button onclick="setStatsPeriod('week')">이번 주</button><button class="active" onclick="setStatsPeriod('month')">이번 달</button><button onclick="setStatsPeriod('all')">전체</button></div></div>
+    <div class="section"><h2>무슨 기록을 볼까요?</h2><div id="typeTabs" class="type-tabs"><button class="active" onclick="setStatsType('family')">집안일</button><button onclick="setStatsType('personal')">자기계발</button><button onclick="setStatsType('all')">전체</button></div></div>
+    <div class="section"><h2>요약</h2><div id="statsSummary" class="card">불러오는 중...</div></div>
+    <div class="section"><h2>누가 열심히 했을까요?</h2><div id="categoryStats">불러오는 중...</div></div>
+    <div class="section"><h2>누가 무슨 일을 했을까요?</h2><div id="itemShares" class="card">불러오는 중...</div></div>
+    <div class="section"><h2>각자 무슨일을 많이 했을까요?</h2><div id="memberTopTasks">불러오는 중...</div></div>
   </div>
 
   <div id="adminScreen" class="screen">
-    <div class="section">
-      <h2>관리</h2>
-      <div id="adminTabs" class="admin-tabs">
-        <button class="active" onclick="setAdminMode('member')">가족 관리</button>
-        <button onclick="setAdminMode('task')">할 일 관리</button>
-      </div>
-    </div>
+    <div class="section"><h2>관리</h2><div id="adminTabs" class="admin-tabs"><button class="active" onclick="setAdminMode('member')">가족 관리</button><button onclick="setAdminMode('task')">할 일 관리</button></div></div>
 
     <div id="memberAdmin">
-      <div class="section">
+      <div id="memberAdminForm" class="section">
         <h2>가족 추가/수정</h2>
         <div class="card form">
           <input type="hidden" id="memberIdInput" />
-          <div class="form-row">
-            <label>이름</label>
-            <input id="memberNameInput" type="text" placeholder="예: 엄마" />
-          </div>
-          <div class="form-row">
-            <label>구분</label>
-            <select id="memberRoleInput">
-              <option value="parent">어른</option>
-              <option value="child">아이</option>
-            </select>
-          </div>
+          <div class="form-row"><label>이름</label><input id="memberNameInput" type="text" placeholder="예: 엄마" /></div>
+          <div class="form-row"><label>구분</label><select id="memberRoleInput"><option value="parent">어른</option><option value="child">아이</option></select></div>
           <button class="save" onclick="saveMemberFromAdmin()">저장하기</button>
           <button class="btn-gray" onclick="resetMemberForm()">새로 입력하기</button>
         </div>
       </div>
-
-      <div class="section">
-        <h2>가족 목록</h2>
-        <div id="adminMemberList">불러오는 중...</div>
-      </div>
+      <div class="section"><h2>가족 목록</h2><div id="adminMemberList">불러오는 중...</div></div>
     </div>
 
     <div id="taskAdmin" style="display:none">
-      <div class="section">
+      <div id="taskAdminForm" class="section">
         <h2>할 일 추가/수정</h2>
         <div class="card form">
           <input type="hidden" id="taskIdInput" />
-          <div class="form-row">
-            <label>할 일</label>
-            <input id="taskNameInput" type="text" placeholder="예: 설거지" />
-          </div>
-          <div class="form-row">
-            <label>그룹</label>
-            <input id="taskGroupInput" type="text" placeholder="예: 주방, 청소, 공부" />
-          </div>
-          <div class="form-row">
-            <label>카테고리</label>
-            <select id="taskCategoryInput"></select>
-          </div>
-          <div class="form-row">
-            <label>누가 하나요</label>
-            <select id="taskScopeInput">
-              <option value="all">모두</option>
-              <option value="adult">어른만</option>
-              <option value="child">아이만</option>
-            </select>
-          </div>
-          <div class="form-row">
-            <label>점수</label>
-            <input id="taskScoreInput" type="number" value="1" />
-          </div>
-          <div class="form-row">
-            <label>상금</label>
-            <select id="taskRewardInput">
-              <option value="TRUE">받아요</option>
-              <option value="FALSE">안 받아요</option>
-            </select>
-          </div>
+          <div class="form-row"><label>할 일</label><input id="taskNameInput" type="text" placeholder="예: 설거지" /></div>
+          <div class="form-row"><label>그룹</label><select id="taskGroupInput"></select></div>
+          <div class="form-row"><label>카테고리</label><select id="taskCategoryInput"></select></div>
+          <div class="form-row"><label>누가 하나요</label><select id="taskScopeInput"><option value="all">모두</option><option value="adult">어른만</option><option value="child">아이만</option></select></div>
+          <div class="form-row"><label>점수</label><input id="taskScoreInput" type="number" value="1" /></div>
+          <div class="form-row"><label>상금</label><select id="taskRewardInput"><option value="TRUE">받아요</option><option value="FALSE">안 받아요</option></select></div>
           <button class="save" onclick="saveTaskFromAdmin()">저장하기</button>
           <button class="btn-gray" onclick="resetTaskForm()">새로 입력하기</button>
         </div>
       </div>
-
-      <div class="section">
-        <h2>할 일 목록</h2>
-        <div id="adminTaskList">불러오는 중...</div>
-      </div>
+      <div class="section"><h2>할 일 목록</h2><div id="adminTaskGroupTabs" class="task-group-tabs"></div><div id="adminTaskList">불러오는 중...</div></div>
     </div>
   </div>
 </div>
@@ -288,93 +135,62 @@ input,select{width:100%;border:1px solid #e5e7eb;border-radius:12px;padding:13px
 <div id="toast" class="toast"></div>
 
 <script>
-const API_URL =
-"https://script.google.com/macros/s/AKfycbyCjC-B2l2R7isQOvNmvF9JC7Fseue0r9JlFTpUDc9basIhIt4FbQ4OdDdSj6aONuvqrg/exec";
+const API_URL="https://script.google.com/macros/s/AKfycbyCjC-B2l2R7isQOvNmvF9JC7Fseue0r9JlFTpUDc9basIhIt4FbQ4OdDdSj6aONuvqrg/exec";
 
-let members = [];
-let tasks = [];
-let categories = [];
-let todayLogs = [];
-let walletSummary = [];
-let walletHistory = [];
-let insightStats = null;
-
-let selectedMember = null;
-let selectedMemberRole = null;
-let selectedTask = null;
-let selectedTaskGroup = "ALL";
-let todayLogFilter = "ALL";
-let walletHistoryFilter = "ALL";
-let statsPeriod = "month";
-let statsType = "family";
-let adminMode = "member";
+let members=[],tasks=[],categories=[],todayLogs=[],walletSummary=[],walletHistory=[],insightStats=null;
+let selectedMember=null,selectedMemberRole=null,selectedTasks=new Set(),selectedTaskGroup="ALL",adminTaskGroupFilter="ALL";
+let todayLogFilter="ALL",walletHistoryFilter="ALL",statsPeriod="month",statsType="family",adminMode="member";
 
 async function init(){
   await loadBaseData();
-
   renderMembers();
   renderSpendMembers();
-  renderMemberFilters("todayLogFilters", setTodayLogFilter);
-  renderMemberFilters("walletHistoryFilters", setWalletHistoryFilter);
+  renderMemberFilters("todayLogFilters",setTodayLogFilter);
+  renderMemberFilters("walletHistoryFilters",setWalletHistoryFilter);
   renderTaskGroupTabs();
   renderTasks();
+  renderTaskGroupSelect();
   renderTaskCategorySelect();
+  renderAdminTaskGroupTabs();
   renderAdminLists();
-
-  await loadTodayLogs();
+  loadTodayLogs();
 }
 
 async function loadBaseData(){
-  members = await fetch(API_URL + "?action=getMembers").then(r=>r.json());
-  tasks = await fetch(API_URL + "?action=getTasks").then(r=>r.json());
-  categories = await fetch(API_URL + "?action=getCategories").then(r=>r.json());
+  const data = await fetch(API_URL + "?action=getInitialData").then(r=>r.json());
+
+  members = data.members || [];
+  tasks = data.tasks || [];
+  categories = data.categories || [];
 }
 
 function showScreen(name){
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
   document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  document.getElementById(name+"Screen").classList.add("active");
+  document.getElementById(name+"Tab").classList.add("active");
 
-  document.getElementById(name + "Screen").classList.add("active");
-  document.getElementById(name + "Tab").classList.add("active");
+  const subMap={record:"오늘 한 일을 기록해요",wallet:"받은 상금을 확인하고 사용해요",stats:"우리 가족의 변화를 살펴봐요",admin:"가족과 할 일을 관리해요"};
+  document.getElementById("screenSub").textContent=subMap[name];
 
-  const subMap = {
-    record: "오늘 한 일을 기록해요",
-    wallet: "받은 상금을 확인하고 사용해요",
-    stats: "우리 가족의 변화를 살펴봐요",
-    admin: "가족과 할 일을 관리해요"
-  };
-  document.getElementById("screenSub").textContent = subMap[name];
-
-  if(name === "wallet"){
-    loadWalletSummary();
-    loadWalletHistory();
-  }
-
-  if(name === "stats"){
-    loadInsightStats();
-  }
-
-  if(name === "admin"){
-    renderAdminLists();
-  }
+  if(name==="wallet"){loadWalletSummary();loadWalletHistory();}
+  if(name==="stats"){loadInsightStats();}
+  if(name==="admin"){renderAdminLists();}
 }
 
 function renderMembers(){
-  const box = document.getElementById("members");
-  box.innerHTML = "";
-
+  const box=document.getElementById("members");
+  box.innerHTML="";
   members.forEach(m=>{
-    const btn = document.createElement("button");
-    btn.textContent = m.name;
-    btn.onclick = () => {
-      selectedMember = m.member_id;
-      selectedMemberRole = m.role;
-      selectedTask = null;
-
+    const btn=document.createElement("button");
+    btn.textContent=m.name;
+    btn.onclick=()=>{
+      selectedMember=m.member_id;
+      selectedMemberRole=m.role;
+      selectedTasks.clear();
+      selectedTaskGroup="ALL";
       document.querySelectorAll("#members button").forEach(b=>b.classList.remove("active"));
       btn.classList.add("active");
-
-      selectedTaskGroup = "ALL";
       renderTaskGroupTabs();
       renderTasks();
     };
@@ -383,121 +199,108 @@ function renderMembers(){
 }
 
 function getTaskGroupName(task){
-  return String(task.task_group || "기타").trim() || "기타";
+  return String(task.task_group||"기타").trim()||"기타";
+}
+
+function getAllTaskGroups(){
+  return [...new Set(tasks.map(t=>getTaskGroupName(t)))].sort((a,b)=>a.localeCompare(b,"ko"));
 }
 
 function getVisibleTasksByMemberRole(){
-  if(!selectedMemberRole) return [];
-
-  const allowedScopes = selectedMemberRole === "parent"
-    ? ["all", "adult"]
-    : ["all", "child"];
-
-  return tasks.filter(t =>
-    allowedScopes.includes(String(t.target_scope || "all").toLowerCase())
-  );
+  if(!selectedMemberRole)return [];
+  const allowedScopes=selectedMemberRole==="parent"?["all","adult"]:["all","child"];
+  return tasks.filter(t=>allowedScopes.includes(String(t.target_scope||"all").toLowerCase()));
 }
 
 function getTaskGroupsForCurrentMember(){
-  const visibleTasks = getVisibleTasksByMemberRole();
-
-  return [...new Set(
-    visibleTasks.map(t => getTaskGroupName(t))
-  )].sort((a, b) => a.localeCompare(b, "ko"));
+  return [...new Set(getVisibleTasksByMemberRole().map(t=>getTaskGroupName(t)))].sort((a,b)=>a.localeCompare(b,"ko"));
 }
 
 function renderTaskGroupTabs(){
-  const box = document.getElementById("taskGroupTabs");
-  box.innerHTML = "";
+  const box=document.getElementById("taskGroupTabs");
+  box.innerHTML="";
+  if(!selectedMemberRole){selectedTaskGroup="ALL";return;}
 
-  if(!selectedMemberRole){
-    selectedTaskGroup = "ALL";
-    return;
-  }
+  const groups=getTaskGroupsForCurrentMember();
+  if(!groups.length){selectedTaskGroup="ALL";return;}
+  if(selectedTaskGroup!=="ALL"&&!groups.includes(selectedTaskGroup))selectedTaskGroup="ALL";
 
-  const groups = getTaskGroupsForCurrentMember();
-
-  if(!groups.length){
-    selectedTaskGroup = "ALL";
-    return;
-  }
-
-  const allBtn = document.createElement("button");
-  allBtn.textContent = "전체";
-  allBtn.className = selectedTaskGroup === "ALL" ? "active" : "";
-  allBtn.onclick = () => setTaskGroup("ALL");
+  const allBtn=document.createElement("button");
+  allBtn.textContent="전체";
+  allBtn.className=selectedTaskGroup==="ALL"?"active":"";
+  allBtn.onclick=()=>setTaskGroup("ALL");
   box.appendChild(allBtn);
 
   groups.forEach(groupName=>{
-    const btn = document.createElement("button");
-    btn.textContent = groupName;
-    btn.className = selectedTaskGroup === groupName ? "active" : "";
-    btn.onclick = () => setTaskGroup(groupName);
+    const btn=document.createElement("button");
+    btn.textContent=groupName;
+    btn.className=selectedTaskGroup===groupName?"active":"";
+    btn.onclick=()=>setTaskGroup(groupName);
     box.appendChild(btn);
   });
-
-  if(selectedTaskGroup !== "ALL" && !groups.includes(selectedTaskGroup)){
-    selectedTaskGroup = "ALL";
-    renderTaskGroupTabs();
-  }
 }
 
 function setTaskGroup(groupName){
-  selectedTaskGroup = groupName;
-  selectedTask = null;
+  selectedTaskGroup=groupName;
   renderTaskGroupTabs();
   renderTasks();
 }
 
 function renderTasks(){
-  const box = document.getElementById("tasks");
-  box.innerHTML = "";
+  const box=document.getElementById("tasks");
+  box.innerHTML="";
 
   if(!selectedMemberRole){
-    document.getElementById("taskGroupTabs").innerHTML = "";
-    box.innerHTML = `<div class="card">먼저 누가 했는지를 골라 주세요.</div>`;
+    document.getElementById("taskGroupTabs").innerHTML="";
+    box.innerHTML=`<div class="card">먼저 누가 했는지를 골라 주세요.</div>`;
     return;
   }
 
   renderTaskGroupTabs();
 
-  let filteredTasks = getVisibleTasksByMemberRole();
-
-  if(selectedTaskGroup !== "ALL"){
-    filteredTasks = filteredTasks.filter(t => getTaskGroupName(t) === selectedTaskGroup);
+  let filteredTasks=getVisibleTasksByMemberRole();
+  if(selectedTaskGroup!=="ALL"){
+    filteredTasks=filteredTasks.filter(t=>getTaskGroupName(t)===selectedTaskGroup);
   }
 
   if(!filteredTasks.length){
-    box.innerHTML = `<div class="card">이 그룹에 등록된 할 일이 없어요.</div>`;
+    box.innerHTML=`<div class="card">이 그룹에 등록된 할 일이 없어요.</div>`;
     return;
   }
 
-  const grouped = {};
+  const grouped={};
   filteredTasks.forEach(t=>{
-    const category = t.category_name || "기타";
-    if(!grouped[category]) grouped[category] = [];
+    const category=t.category_name||"기타";
+    if(!grouped[category])grouped[category]=[];
     grouped[category].push(t);
   });
 
   Object.keys(grouped).forEach(category=>{
-    const group = document.createElement("div");
-    group.className = "task-group";
+    const group=document.createElement("div");
+    group.className="task-group";
 
-    const title = document.createElement("div");
-    title.className = "task-group-title";
-    title.textContent = category;
+    const title=document.createElement("div");
+    title.className="task-group-title";
+    title.textContent=category;
 
-    const list = document.createElement("div");
-    list.className = "tasks";
+    const list=document.createElement("div");
+    list.className="tasks";
 
     grouped[category].forEach(t=>{
-      const btn = document.createElement("button");
-      btn.textContent = t.task_name;
-      btn.onclick = () => {
-        selectedTask = t.task_id;
-        document.querySelectorAll("#tasks button").forEach(b=>b.classList.remove("active"));
-        btn.classList.add("active");
+      const btn=document.createElement("button");
+      btn.textContent=t.task_name;
+      if(selectedTasks.has(t.task_id))btn.classList.add("active");
+
+      btn.onclick=()=>{
+        if(selectedTasks.has(t.task_id)){
+          selectedTasks.delete(t.task_id);
+          btn.classList.remove("active");
+        }else{
+          selectedTasks.add(t.task_id);
+          btn.classList.add("active");
+        }
       };
+
       list.appendChild(btn);
     });
 
@@ -506,220 +309,175 @@ function renderTasks(){
     box.appendChild(group);
   });
 }
+
 async function saveLog(){
-  if(!selectedMember){
-    showToast("구성원을 선택해 주세요");
-    return;
-  }
-  if(!selectedTask){
-    showToast("할일을 선택해 주세요");
-    return;
-  }
+  if(!selectedMember){showToast("구성원을 선택해 주세요");return;}
+  if(selectedTasks.size===0){showToast("할일을 하나 이상 선택해 주세요");return;}
 
-  const res = await fetch(API_URL, {
-    method:"POST",
-    body: JSON.stringify({
-      action:"addLog",
-      member_id:selectedMember,
-      task_id:selectedTask
-    })
-  }).then(r=>r.json());
+  const taskIds=Array.from(selectedTasks);
 
-  if(res.ok){
-    showToast("기록했어요!");
-    await loadTodayLogs();
-  }else{
+  try{
+    const results=await Promise.all(taskIds.map(taskId=>
+      fetch(API_URL,{
+        method:"POST",
+        body:JSON.stringify({action:"addLog",member_id:selectedMember,task_id:taskId})
+      }).then(r=>r.json())
+    ));
+
+    if(results.every(res=>res.ok)){
+      showToast(`${taskIds.length}개를 기록했어요!`);
+      selectedTasks.clear();
+      renderTasks();
+      loadTodayLogs();
+    }else{
+      showToast("일부 기록에 실패했어요");
+    }
+  }catch(e){
     showToast("기록 실패");
   }
 }
 
-function renderMemberFilters(targetId, clickHandler){
-  const box = document.getElementById(targetId);
-  box.innerHTML = "";
+function renderMemberFilters(targetId,clickHandler){
+  const box=document.getElementById(targetId);
+  box.innerHTML="";
 
-  const allBtn = document.createElement("button");
-  allBtn.textContent = "전체";
-  allBtn.className = "active";
-  allBtn.onclick = () => clickHandler("ALL");
+  const allBtn=document.createElement("button");
+  allBtn.textContent="전체";
+  allBtn.className="active";
+  allBtn.onclick=()=>clickHandler("ALL");
   box.appendChild(allBtn);
 
   members.forEach(m=>{
-    const btn = document.createElement("button");
-    btn.textContent = m.name;
-    btn.onclick = () => clickHandler(m.member_id);
+    const btn=document.createElement("button");
+    btn.textContent=m.name;
+    btn.onclick=()=>clickHandler(m.member_id);
     box.appendChild(btn);
   });
 }
 
-function setFilterActive(targetId, selectedId){
-  document.querySelectorAll(`#${targetId} button`).forEach((btn, index)=>{
+function setFilterActive(targetId,selectedId){
+  document.querySelectorAll(`#${targetId} button`).forEach((btn,index)=>{
     btn.classList.remove("active");
-
-    if(selectedId === "ALL" && index === 0) btn.classList.add("active");
-    if(members[index - 1] && members[index - 1].member_id === selectedId) btn.classList.add("active");
+    if(selectedId==="ALL"&&index===0)btn.classList.add("active");
+    if(members[index-1]&&members[index-1].member_id===selectedId)btn.classList.add("active");
   });
 }
 
 function setTodayLogFilter(memberId){
-  todayLogFilter = memberId;
-  setFilterActive("todayLogFilters", memberId);
+  todayLogFilter=memberId;
+  setFilterActive("todayLogFilters",memberId);
   renderTodayLogs();
 }
 
 function setWalletHistoryFilter(memberId){
-  walletHistoryFilter = memberId;
-  setFilterActive("walletHistoryFilters", memberId);
+  walletHistoryFilter=memberId;
+  setFilterActive("walletHistoryFilters",memberId);
   renderWalletHistory();
 }
 
 async function loadTodayLogs(){
-  todayLogs = await fetch(API_URL + "?action=getTodayLogs").then(r=>r.json());
+  todayLogs=await fetch(API_URL+"?action=getTodayLogs").then(r=>r.json());
   renderTodayLogs();
 }
 
 function renderTodayLogs(){
-  const box = document.getElementById("todayLogs");
+  const box=document.getElementById("todayLogs");
+  const filtered=todayLogFilter==="ALL"?todayLogs:todayLogs.filter(log=>getMemberIdByName(log.member_name)===todayLogFilter);
 
-  const filtered = todayLogFilter === "ALL"
-    ? todayLogs
-    : todayLogs.filter(log => getMemberIdByName(log.member_name) === todayLogFilter);
+  if(!filtered.length){box.innerHTML="아직 기록이 없어요.";return;}
 
-  if(!filtered.length){
-    box.innerHTML = "아직 기록이 없어요.";
-    return;
-  }
-
-  box.innerHTML = "";
-
+  box.innerHTML="";
   filtered.forEach(log=>{
-    const time = new Date(log.created_at).toLocaleTimeString("ko-KR", {
-      hour:"2-digit",
-      minute:"2-digit"
-    });
-
-    const row = document.createElement("div");
-    row.className = "stat-row";
-    row.innerHTML = `<span>${time}</span><strong>${log.member_name} · ${log.task_name}</strong>`;
+    const time=new Date(log.created_at).toLocaleTimeString("ko-KR",{hour:"2-digit",minute:"2-digit"});
+    const row=document.createElement("div");
+    row.className="stat-row";
+    row.innerHTML=`<span>${time}</span><strong>${log.member_name} · ${log.task_name}</strong>`;
     box.appendChild(row);
   });
 }
 
 function getMemberIdByName(name){
-  const member = members.find(m => m.name === name);
-  return member ? member.member_id : null;
+  const member=members.find(m=>m.name===name);
+  return member?member.member_id:null;
 }
 
 function renderSpendMembers(){
-  const select = document.getElementById("spendMember");
-  select.innerHTML = "";
-
+  const select=document.getElementById("spendMember");
+  select.innerHTML="";
   members.forEach(m=>{
-    const option = document.createElement("option");
-    option.value = m.member_id;
-    option.textContent = m.name;
+    const option=document.createElement("option");
+    option.value=m.member_id;
+    option.textContent=m.name;
     select.appendChild(option);
   });
 }
 
 async function loadWalletSummary(){
-  walletSummary = await fetch(API_URL + "?action=getWalletSummary").then(r=>r.json());
-  const box = document.getElementById("walletSummary");
+  walletSummary=await fetch(API_URL+"?action=getWalletSummary").then(r=>r.json());
+  const box=document.getElementById("walletSummary");
+  const total=walletSummary.reduce((sum,item)=>sum+Number(item.balance||0),0);
+  document.getElementById("familyRewardTotal").innerHTML=`우리 가족이 <strong>${total.toLocaleString()}원</strong>을 모았어요!`;
 
-  const total = walletSummary.reduce((sum, item)=>sum + Number(item.balance || 0), 0);
-  document.getElementById("familyRewardTotal").innerHTML =
-    `우리 가족이 <strong>${total.toLocaleString()}원</strong>을 모았어요!`;
-
-  box.innerHTML = "";
-
+  box.innerHTML="";
   walletSummary.forEach(item=>{
-    const row = document.createElement("div");
-    row.className = "reward-summary-row";
-    row.innerHTML = `
+    const row=document.createElement("div");
+    row.className="reward-summary-row";
+    row.innerHTML=`
       <span><strong>${item.name}</strong></span>
       <strong>${Number(item.balance).toLocaleString()}원</strong>
-      <small>
-        <span class="earn-text">${Number(item.earned).toLocaleString()}원</span> 모았어요
-        ·
-        <span class="spend-text">${Number(item.spent).toLocaleString()}원</span> 썼어요
-      </small>
+      <small><span class="earn-text">${Number(item.earned).toLocaleString()}원</span> 모았어요 · <span class="spend-text">${Number(item.spent).toLocaleString()}원</span> 썼어요</small>
     `;
     box.appendChild(row);
   });
 }
 
 async function loadWalletHistory(){
-  walletHistory = await fetch(API_URL + "?action=getWalletHistory").then(r=>r.json());
+  walletHistory=await fetch(API_URL+"?action=getWalletHistory").then(r=>r.json());
   renderWalletHistory();
 }
 
 function renderWalletHistory(){
-  const box = document.getElementById("walletHistory");
+  const box=document.getElementById("walletHistory");
+  const filtered=walletHistoryFilter==="ALL"?walletHistory:walletHistory.filter(tx=>tx.member_id===walletHistoryFilter);
 
-  const filtered = walletHistoryFilter === "ALL"
-    ? walletHistory
-    : walletHistory.filter(tx => tx.member_id === walletHistoryFilter);
+  if(!filtered.length){box.innerHTML="아직 지갑 기록이 없어요.";return;}
 
-  if(!filtered.length){
-    box.innerHTML = "아직 지갑 기록이 없어요.";
-    return;
-  }
+  box.innerHTML="";
+  filtered.slice(0,30).forEach(tx=>{
+    const amount=Number(tx.amount||0);
+    const sign=amount>0?"+":"";
+    const typeLabel=amount>0?"적립":"사용";
+    const amountClass=amount>0?"earn-text":"spend-text";
 
-  box.innerHTML = "";
-
-  filtered.slice(0, 30).forEach(tx=>{
-    const amount = Number(tx.amount || 0);
-    const sign = amount > 0 ? "+" : "";
-    const typeLabel = amount > 0 ? "적립" : "사용";
-    const amountClass = amount > 0 ? "earn-text" : "spend-text";
-
-    const row = document.createElement("div");
-    row.className = "wallet-row";
-    row.innerHTML = `
-      <span class="badge">${typeLabel}</span>
-      <strong>${tx.member_name}</strong>
-      <span class="desc">${tx.description || "-"}</span>
-      <span class="amount ${amountClass}">${sign}${amount.toLocaleString()}원</span>
-    `;
+    const row=document.createElement("div");
+    row.className="wallet-row";
+    row.innerHTML=`<span class="badge">${typeLabel}</span><strong>${tx.member_name}</strong><span class="desc">${tx.description||"-"}</span><span class="amount ${amountClass}">${sign}${amount.toLocaleString()}원</span>`;
     box.appendChild(row);
   });
 }
 
 async function spendWallet(){
-  const memberId = document.getElementById("spendMember").value;
-  const amount = Number(document.getElementById("spendAmount").value);
-  const description = document.getElementById("spendDesc").value;
+  const memberId=document.getElementById("spendMember").value;
+  const amount=Number(document.getElementById("spendAmount").value);
+  const description=document.getElementById("spendDesc").value;
 
-  if(!amount || amount <= 0){
-    showToast("사용 금액을 입력해 주세요");
-    return;
-  }
+  if(!amount||amount<=0){showToast("사용 금액을 입력해 주세요");return;}
 
   if(!walletSummary.length){
-    walletSummary = await fetch(API_URL + "?action=getWalletSummary").then(r=>r.json());
+    walletSummary=await fetch(API_URL+"?action=getWalletSummary").then(r=>r.json());
   }
 
-  const owner = walletSummary.find(item => item.member_id === memberId);
-  const balance = owner ? Number(owner.balance || 0) : 0;
+  const owner=walletSummary.find(item=>item.member_id===memberId);
+  const balance=owner?Number(owner.balance||0):0;
 
-  if(amount > balance){
-    showToast("잔액보다 많이 사용할 수 없어요");
-    return;
-  }
+  if(amount>balance){showToast("잔액보다 많이 사용할 수 없어요");return;}
 
-  const res = await fetch(API_URL, {
-    method:"POST",
-    body: JSON.stringify({
-      action:"addWalletSpend",
-      member_id:memberId,
-      amount,
-      description
-    })
-  }).then(r=>r.json());
+  const res=await fetch(API_URL,{method:"POST",body:JSON.stringify({action:"addWalletSpend",member_id:memberId,amount,description})}).then(r=>r.json());
 
   if(res.ok){
     showToast("쓴 돈을 기록했어요");
-    document.getElementById("spendAmount").value = "";
-    document.getElementById("spendDesc").value = "";
+    document.getElementById("spendAmount").value="";
+    document.getElementById("spendDesc").value="";
     loadWalletSummary();
     loadWalletHistory();
   }else{
@@ -728,27 +486,26 @@ async function spendWallet(){
 }
 
 function setStatsPeriod(period){
-  statsPeriod = period;
+  statsPeriod=period;
   document.querySelectorAll("#periodTabs button").forEach(btn=>btn.classList.remove("active"));
   event.target.classList.add("active");
   loadInsightStats();
 }
 
 function setStatsType(type){
-  statsType = type;
+  statsType=type;
   document.querySelectorAll("#typeTabs button").forEach(btn=>btn.classList.remove("active"));
   event.target.classList.add("active");
   renderInsightStats();
 }
 
 async function loadInsightStats(){
-  insightStats = await fetch(API_URL + "?action=getInsightStats&period=" + statsPeriod).then(r=>r.json());
+  insightStats=await fetch(API_URL+"?action=getInsightStats&period="+statsPeriod).then(r=>r.json());
   renderInsightStats();
 }
 
 function renderInsightStats(){
-  if(!insightStats) return;
-
+  if(!insightStats)return;
   renderStatsSummary();
   renderCategoryStats();
   renderItemShares();
@@ -756,185 +513,188 @@ function renderInsightStats(){
 }
 
 function filterByStatsType(list){
-  if(statsType === "all") return list;
-  return list.filter(item => item.category_type === statsType || item.type === statsType);
+  if(statsType==="all")return list;
+  return list.filter(item=>item.category_type===statsType||item.type===statsType);
 }
 
 function renderStatsSummary(){
-  const box = document.getElementById("statsSummary");
-  const s = insightStats.summary;
+  const box=document.getElementById("statsSummary");
+  const s=insightStats.summary;
+  const diffText=statsPeriod==="all"?"전체 기간 기준이에요.":s.count_diff>=0?`저번보다 ${s.count_diff}번 더 참여했어요.`:`저번보다 ${Math.abs(s.count_diff)}번 적게 참여했어요.`;
 
-  const diffText = statsPeriod === "all"
-    ? "전체 기간 기준이에요."
-    : s.count_diff >= 0
-      ? `저번보다 ${s.count_diff}번 더 참여했어요.`
-      : `저번보다 ${Math.abs(s.count_diff)}번 적게 참여했어요.`;
-
-  box.innerHTML = `
+  box.innerHTML=`
     <div class="summary-grid">
-      <div class="summary-box">
-        <div class="label">몇 번 했는지 다 합치면</div>
-        <div class="value">${s.total_count}번</div>
-      </div>
-      <div class="summary-box">
-        <div class="label">몇 점 받았는지 다 합치면</div>
-        <div class="value">${s.total_score}점</div>
-      </div>
+      <div class="summary-box"><div class="label">몇 번 했는지 다 합치면</div><div class="value">${s.total_count}번</div></div>
+      <div class="summary-box"><div class="label">몇 점 받았는지 다 합치면</div><div class="value">${s.total_score}점</div></div>
     </div>
     <div class="change">${diffText}</div>
   `;
 }
 
 function renderCategoryStats(){
-  const box = document.getElementById("categoryStats");
-  const categories = filterByStatsType(insightStats.categoryStats);
+  const box=document.getElementById("categoryStats");
+  const list=filterByStatsType(insightStats.categoryStats);
 
-  if(!categories.length){
-    box.innerHTML = `<div class="card empty">아직 해당 유형의 기록이 없어요.</div>`;
-    return;
-  }
+  if(!list.length){box.innerHTML=`<div class="card empty">아직 해당 유형의 기록이 없어요.</div>`;return;}
 
-  box.innerHTML = "";
-
-  categories.forEach(category=>{
-    const card = document.createElement("div");
-    card.className = "category-card";
-
-    card.innerHTML = `
+  box.innerHTML="";
+  list.forEach(category=>{
+    const card=document.createElement("div");
+    card.className="category-card";
+    card.innerHTML=`
       <h3>${category.category_name}</h3>
       <div class="badge">많이 한 사람</div>
-      <div class="rank-list">
-        ${renderRankRows(category.count_ranking, "count", "번")}
-      </div>
+      <div class="rank-list">${renderRankRows(category.count_ranking,"count","번")}</div>
       <div class="badge">어려운 일을 많이 한 사람</div>
-      <div class="rank-list">
-        ${renderRankRows(category.score_ranking, "score", "점")}
-      </div>
+      <div class="rank-list">${renderRankRows(category.score_ranking,"score","점")}</div>
     `;
-
     box.appendChild(card);
   });
 }
 
-function renderRankRows(list, key, suffix){
-  return list.map((item, index)=>`
-    <div class="rank-row">
-      <strong>${index + 1}</strong>
-      <span>${item.name}</span>
-      <strong>${item[key]}${suffix}</strong>
-    </div>
-  `).join("");
+function renderRankRows(list,key,suffix){
+  return list.map((item,index)=>`<div class="rank-row"><strong>${index+1}</strong><span>${item.name}</span><strong>${item[key]}${suffix}</strong></div>`).join("");
 }
 
 function renderItemShares(){
-  const box = document.getElementById("itemShares");
-  const items = filterByStatsType(insightStats.itemShares);
+  const box=document.getElementById("itemShares");
+  const items=filterByStatsType(insightStats.itemShares);
 
-  if(!items.length){
-    box.innerHTML = "아직 항목별 기록이 없어요.";
-    return;
-  }
+  if(!items.length){box.innerHTML="아직 항목별 기록이 없어요.";return;}
 
-  box.innerHTML = "";
-
+  box.innerHTML="";
   items.forEach(item=>{
-    const wrap = document.createElement("div");
-    wrap.className = "share-row";
+    const wrap=document.createElement("div");
+    wrap.className="share-row";
+    const scopeLabel=item.target_scope==="adult"?"어른 활동":item.target_scope==="child"?"아이 활동":"가족 활동";
 
-    const scopeLabel = item.target_scope === "adult"
-      ? "어른 활동"
-      : item.target_scope === "child"
-        ? "아이 활동"
-        : "가족 활동";
-
-    wrap.innerHTML = `
-      <div class="share-title">
-        <span>${item.task_name}</span>
-        <small>${scopeLabel}</small>
-      </div>
-      <div class="bar">
-        ${item.members.filter(m=>m.count > 0).map(m=>`
-          <div class="seg" style="width:${m.percent}%">${m.percent}%</div>
-        `).join("")}
-      </div>
-      <div class="legend">
-        ${item.members.filter(m=>m.count > 0).map(m=>`${m.name} ${m.percent}%`).join(" · ")}
-      </div>
+    wrap.innerHTML=`
+      <div class="share-title"><span>${item.task_name}</span><small>${scopeLabel}</small></div>
+      <div class="bar">${item.members.filter(m=>m.count>0).map(m=>`<div class="seg" style="width:${m.percent}%">${m.percent}%</div>`).join("")}</div>
+      <div class="legend">${item.members.filter(m=>m.count>0).map(m=>`${m.name} ${m.percent}%`).join(" · ")}</div>
     `;
-
     box.appendChild(wrap);
   });
 }
 
 function renderMemberTopTasks(){
-  const box = document.getElementById("memberTopTasks");
-  const membersData = insightStats.memberTopTasks;
-
-  box.innerHTML = "";
+  const box=document.getElementById("memberTopTasks");
+  const membersData=insightStats.memberTopTasks;
+  box.innerHTML="";
 
   membersData.forEach(member=>{
-    const filteredCategories = filterByStatsType(member.categories);
+    const filteredCategories=filterByStatsType(member.categories);
+    if(!filteredCategories.length)return;
 
-    if(!filteredCategories.length) return;
-
-    const card = document.createElement("div");
-    card.className = "member-card";
-
-    card.innerHTML = `
+    const card=document.createElement("div");
+    card.className="member-card";
+    card.innerHTML=`
       <h3>${member.name}</h3>
-      ${filteredCategories.map(category=>`
-        <div>
-          <strong>${category.category_name}</strong>:
-          ${category.top_tasks.map(t=>`${t.task_name} ${t.count}번`).join(", ")}
-        </div>
-      `).join("")}
+      ${filteredCategories.map(category=>`<div><strong>${category.category_name}</strong>: ${category.top_tasks.map(t=>`${t.task_name} ${t.count}번`).join(", ")}</div>`).join("")}
     `;
-
     box.appendChild(card);
   });
 
   if(!box.innerHTML){
-    box.innerHTML = `<div class="card empty">아직 구성원별 기록이 없어요.</div>`;
+    box.innerHTML=`<div class="card empty">아직 구성원별 기록이 없어요.</div>`;
   }
 }
 
 function setAdminMode(mode){
-  adminMode = mode;
-
+  adminMode=mode;
   document.querySelectorAll("#adminTabs button").forEach(btn=>btn.classList.remove("active"));
   event.target.classList.add("active");
+  document.getElementById("memberAdmin").style.display=mode==="member"?"block":"none";
+  document.getElementById("taskAdmin").style.display=mode==="task"?"block":"none";
+}
 
-  document.getElementById("memberAdmin").style.display = mode === "member" ? "block" : "none";
-  document.getElementById("taskAdmin").style.display = mode === "task" ? "block" : "none";
+function renderTaskGroupSelect(selectedValue){
+  const select=document.getElementById("taskGroupInput");
+  if(!select)return;
+
+  const groups=getAllTaskGroups();
+  select.innerHTML="";
+
+  if(!groups.length){
+    const option=document.createElement("option");
+    option.value="기타";
+    option.textContent="기타";
+    select.appendChild(option);
+    return;
+  }
+
+  groups.forEach(groupName=>{
+    const option=document.createElement("option");
+    option.value=groupName;
+    option.textContent=groupName;
+    select.appendChild(option);
+  });
+
+  if(selectedValue&&groups.includes(selectedValue)){
+    select.value=selectedValue;
+  }else{
+    select.selectedIndex=0;
+  }
 }
 
 function renderTaskCategorySelect(){
-  const select = document.getElementById("taskCategoryInput");
-  select.innerHTML = "";
-
+  const select=document.getElementById("taskCategoryInput");
+  select.innerHTML="";
   categories.forEach(c=>{
-    const option = document.createElement("option");
-    option.value = c.category_id;
-    option.textContent = c.category_name;
+    const option=document.createElement("option");
+    option.value=c.category_id;
+    option.textContent=c.category_name;
     select.appendChild(option);
   });
 }
 
+function renderAdminTaskGroupTabs(){
+  const box=document.getElementById("adminTaskGroupTabs");
+  if(!box)return;
+  box.innerHTML="";
+
+  const groups=getAllTaskGroups();
+
+  if(adminTaskGroupFilter!=="ALL"&&!groups.includes(adminTaskGroupFilter)){
+    adminTaskGroupFilter="ALL";
+  }
+
+  const allBtn=document.createElement("button");
+  allBtn.textContent="전체";
+  allBtn.className=adminTaskGroupFilter==="ALL"?"active":"";
+  allBtn.onclick=()=>setAdminTaskGroupFilter("ALL");
+  box.appendChild(allBtn);
+
+  groups.forEach(groupName=>{
+    const btn=document.createElement("button");
+    btn.textContent=groupName;
+    btn.className=adminTaskGroupFilter===groupName?"active":"";
+    btn.onclick=()=>setAdminTaskGroupFilter(groupName);
+    box.appendChild(btn);
+  });
+}
+
+function setAdminTaskGroupFilter(groupName){
+  adminTaskGroupFilter=groupName;
+  renderAdminTaskGroupTabs();
+  renderAdminTaskList();
+}
+
 function renderAdminLists(){
   renderAdminMemberList();
+  renderAdminTaskGroupTabs();
   renderAdminTaskList();
 }
 
 function renderAdminMemberList(){
-  const box = document.getElementById("adminMemberList");
-  box.innerHTML = "";
+  const box=document.getElementById("adminMemberList");
+  box.innerHTML="";
 
   members.forEach(m=>{
-    const roleLabel = m.role === "parent" ? "어른" : "아이";
-
-    const card = document.createElement("div");
-    card.className = "admin-card";
-    card.innerHTML = `
+    const roleLabel=m.role==="parent"?"어른":"아이";
+    const card=document.createElement("div");
+    card.className="admin-card";
+    card.innerHTML=`
       <div class="admin-title">${m.name}</div>
       <div class="admin-meta">${roleLabel}</div>
       <div class="admin-actions">
@@ -947,19 +707,26 @@ function renderAdminMemberList(){
 }
 
 function renderAdminTaskList(){
-  const box = document.getElementById("adminTaskList");
-  box.innerHTML = "";
+  const box=document.getElementById("adminTaskList");
+  box.innerHTML="";
 
-  tasks.forEach(t=>{
-    const scopeLabel = t.target_scope === "adult" ? "어른만" : t.target_scope === "child" ? "아이만" : "모두";
-    const rewardLabel = String(t.reward_eligible).toUpperCase() === "TRUE" ? "상금 받음" : "상금 없음";
-    const taskGroupLabel = getTaskGroupName(t);
+  const filteredTasks=adminTaskGroupFilter==="ALL"?tasks:tasks.filter(t=>getTaskGroupName(t)===adminTaskGroupFilter);
 
-    const card = document.createElement("div");
-    card.className = "admin-card";
-    card.innerHTML = `
+  if(!filteredTasks.length){
+    box.innerHTML=`<div class="card empty">이 그룹에 등록된 할 일이 없어요.</div>`;
+    return;
+  }
+
+  filteredTasks.forEach(t=>{
+    const scopeLabel=t.target_scope==="adult"?"어른만":t.target_scope==="child"?"아이만":"모두";
+    const rewardLabel=String(t.reward_eligible).toUpperCase()==="TRUE"?"상금 받음":"상금 없음";
+    const taskGroupLabel=getTaskGroupName(t);
+
+    const card=document.createElement("div");
+    card.className="admin-card";
+    card.innerHTML=`
       <div class="admin-title">${t.task_name}</div>
-      <div class="admin-meta">${taskGroupLabel} · ${t.category_name || "기타"} · ${scopeLabel} · ${t.base_score}점 · ${rewardLabel}</div>
+      <div class="admin-meta">${taskGroupLabel} · ${t.category_name||"기타"} · ${scopeLabel} · ${t.base_score}점 · ${rewardLabel}</div>
       <div class="admin-actions">
         <button class="btn-small btn-gray" onclick="editTask('${t.task_id}')">수정</button>
         <button class="btn-small btn-danger" onclick="deleteTaskFromAdmin('${t.task_id}')">삭제</button>
@@ -970,46 +737,38 @@ function renderAdminTaskList(){
 }
 
 function editMember(memberId){
-  const m = members.find(item => item.member_id === memberId);
-  if(!m) return;
+  const m=members.find(item=>item.member_id===memberId);
+  if(!m)return;
 
-  document.getElementById("memberIdInput").value = m.member_id;
-  document.getElementById("memberNameInput").value = m.name;
-  document.getElementById("memberRoleInput").value = m.role;
+  document.getElementById("memberIdInput").value=m.member_id;
+  document.getElementById("memberNameInput").value=m.name;
+  document.getElementById("memberRoleInput").value=m.role;
+  document.getElementById("memberAdminForm").scrollIntoView({behavior:"smooth",block:"start"});
   showToast("가족 정보를 수정해 보세요");
 }
 
 function resetMemberForm(){
-  document.getElementById("memberIdInput").value = "";
-  document.getElementById("memberNameInput").value = "";
-  document.getElementById("memberRoleInput").value = "parent";
+  document.getElementById("memberIdInput").value="";
+  document.getElementById("memberNameInput").value="";
+  document.getElementById("memberRoleInput").value="parent";
 }
 
 async function saveMemberFromAdmin(){
-  const memberId = document.getElementById("memberIdInput").value;
-  const name = document.getElementById("memberNameInput").value.trim();
-  const role = document.getElementById("memberRoleInput").value;
+  const memberId=document.getElementById("memberIdInput").value;
+  const name=document.getElementById("memberNameInput").value.trim();
+  const role=document.getElementById("memberRoleInput").value;
 
-  if(!name){
-    showToast("이름을 입력해 주세요");
-    return;
-  }
+  if(!name){showToast("이름을 입력해 주세요");return;}
 
-  const action = memberId ? "updateMember" : "addMember";
+  const action=memberId?"updateMember":"addMember";
 
-  const res = await fetch(API_URL, {
+  const res=await fetch(API_URL,{
     method:"POST",
-    body: JSON.stringify({
-      action,
-      member_id: memberId,
-      name,
-      role,
-      is_active: true
-    })
+    body:JSON.stringify({action,member_id:memberId,name,role,is_active:true})
   }).then(r=>r.json());
 
   if(res.ok){
-    showToast("저장했어요");
+    showToast(memberId?"수정되었습니다":"저장되었습니다");
     resetMemberForm();
     await reloadAfterAdminChange();
   }else{
@@ -1018,14 +777,11 @@ async function saveMemberFromAdmin(){
 }
 
 async function deleteMemberFromAdmin(memberId){
-  if(!confirm("이 가족을 목록에서 숨길까요?")) return;
+  if(!confirm("이 가족을 목록에서 숨길까요?"))return;
 
-  const res = await fetch(API_URL, {
+  const res=await fetch(API_URL,{
     method:"POST",
-    body: JSON.stringify({
-      action:"deleteMember",
-      member_id:memberId
-    })
+    body:JSON.stringify({action:"deleteMember",member_id:memberId})
   }).then(r=>r.json());
 
   if(res.ok){
@@ -1037,60 +793,59 @@ async function deleteMemberFromAdmin(memberId){
 }
 
 function editTask(taskId){
-  const t = tasks.find(item => item.task_id === taskId);
-  if(!t) return;
+  const t=tasks.find(item=>item.task_id===taskId);
+  if(!t)return;
 
-  document.getElementById("taskIdInput").value = t.task_id;
-  document.getElementById("taskNameInput").value = t.task_name;
-  document.getElementById("taskGroupInput").value = getTaskGroupName(t);
-  document.getElementById("taskCategoryInput").value = t.category_id;
-  document.getElementById("taskScopeInput").value = t.target_scope || "all";
-  document.getElementById("taskScoreInput").value = t.base_score || 1;
-  document.getElementById("taskRewardInput").value =
-    String(t.reward_eligible).toUpperCase() === "TRUE" ? "TRUE" : "FALSE";
+  const groupName=getTaskGroupName(t);
 
+  document.getElementById("taskIdInput").value=t.task_id;
+  document.getElementById("taskNameInput").value=t.task_name;
+  renderTaskGroupSelect(groupName);
+  document.getElementById("taskCategoryInput").value=t.category_id;
+  document.getElementById("taskScopeInput").value=t.target_scope||"all";
+  document.getElementById("taskScoreInput").value=t.base_score||1;
+  document.getElementById("taskRewardInput").value=String(t.reward_eligible).toUpperCase()==="TRUE"?"TRUE":"FALSE";
+
+  document.getElementById("taskAdminForm").scrollIntoView({behavior:"smooth",block:"start"});
   showToast("할 일을 수정해 보세요");
 }
 
 function resetTaskForm(){
-  document.getElementById("taskIdInput").value = "";
-  document.getElementById("taskNameInput").value = "";
-  document.getElementById("taskGroupInput").value = "";
-  document.getElementById("taskCategoryInput").selectedIndex = 0;
-  document.getElementById("taskScopeInput").value = "all";
-  document.getElementById("taskScoreInput").value = 1;
-  document.getElementById("taskRewardInput").value = "TRUE";
+  document.getElementById("taskIdInput").value="";
+  document.getElementById("taskNameInput").value="";
+  renderTaskGroupSelect();
+  document.getElementById("taskCategoryInput").selectedIndex=0;
+  document.getElementById("taskScopeInput").value="all";
+  document.getElementById("taskScoreInput").value=1;
+  document.getElementById("taskRewardInput").value="TRUE";
 }
 
 async function saveTaskFromAdmin(){
-  const taskId = document.getElementById("taskIdInput").value;
-  const taskName = document.getElementById("taskNameInput").value.trim();
-  const taskGroup = document.getElementById("taskGroupInput").value.trim() || "기타";
+  const taskId=document.getElementById("taskIdInput").value;
+  const taskName=document.getElementById("taskNameInput").value.trim();
+  const taskGroup=document.getElementById("taskGroupInput").value||"기타";
 
-  if(!taskName){
-    showToast("할 일 이름을 입력해 주세요");
-    return;
-  }
+  if(!taskName){showToast("할 일 이름을 입력해 주세요");return;}
 
-  const action = taskId ? "updateTask" : "addTask";
+  const action=taskId?"updateTask":"addTask";
 
-  const res = await fetch(API_URL, {
+  const res=await fetch(API_URL,{
     method:"POST",
-    body: JSON.stringify({
+    body:JSON.stringify({
       action,
-      task_id: taskId,
-      task_name: taskName,
-      task_group: taskGroup,
-      category_id: document.getElementById("taskCategoryInput").value,
-      target_scope: document.getElementById("taskScopeInput").value,
-      base_score: Number(document.getElementById("taskScoreInput").value || 1),
-      reward_eligible: document.getElementById("taskRewardInput").value,
-      is_active: true
+      task_id:taskId,
+      task_name:taskName,
+      task_group:taskGroup,
+      category_id:document.getElementById("taskCategoryInput").value,
+      target_scope:document.getElementById("taskScopeInput").value,
+      base_score:Number(document.getElementById("taskScoreInput").value||1),
+      reward_eligible:document.getElementById("taskRewardInput").value,
+      is_active:true
     })
   }).then(r=>r.json());
 
   if(res.ok){
-    showToast("저장했어요");
+    showToast(taskId?"수정되었습니다":"저장되었습니다");
     resetTaskForm();
     await reloadAfterAdminChange();
   }else{
@@ -1099,14 +854,11 @@ async function saveTaskFromAdmin(){
 }
 
 async function deleteTaskFromAdmin(taskId){
-  if(!confirm("이 할 일을 목록에서 숨길까요?")) return;
+  if(!confirm("이 할 일을 목록에서 숨길까요?"))return;
 
-  const res = await fetch(API_URL, {
+  const res=await fetch(API_URL,{
     method:"POST",
-    body: JSON.stringify({
-      action:"deleteTask",
-      task_id:taskId
-    })
+    body:JSON.stringify({action:"deleteTask",task_id:taskId})
   }).then(r=>r.json());
 
   if(res.ok){
@@ -1122,18 +874,20 @@ async function reloadAfterAdminChange(){
 
   renderMembers();
   renderSpendMembers();
-  renderMemberFilters("todayLogFilters", setTodayLogFilter);
-  renderMemberFilters("walletHistoryFilters", setWalletHistoryFilter);
+  renderMemberFilters("todayLogFilters",setTodayLogFilter);
+  renderMemberFilters("walletHistoryFilters",setWalletHistoryFilter);
   renderTaskGroupTabs();
   renderTasks();
+  renderTaskGroupSelect();
   renderTaskCategorySelect();
+  renderAdminTaskGroupTabs();
   renderAdminLists();
 }
 
 function showToast(msg){
-  const toast = document.getElementById("toast");
-  toast.textContent = msg;
-  toast.style.display = "block";
+  const toast=document.getElementById("toast");
+  toast.textContent=msg;
+  toast.style.display="block";
   setTimeout(()=>toast.style.display="none",1600);
 }
 
